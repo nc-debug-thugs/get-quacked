@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-Fork the repo and:
+Fork the repo so we can keep this as a clean base template and:
 ```
 npm install
 ```

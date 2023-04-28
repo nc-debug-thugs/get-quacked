@@ -3,6 +3,7 @@ import Phaser from "phaser";
 export default class Health {
   constructor(scene) {
     this.healthSprites = [];
+    this.playerHealth = this.healthSprites
 
     for (let i = 1; i < 4; i++) {
       this.healthSprites.push(

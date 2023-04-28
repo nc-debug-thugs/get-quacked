@@ -19,6 +19,13 @@ export default class Play extends Phaser.Scene {
   create() {
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    let bgImage = this.add.image(
+      this.cameras.main.width / 2,
+      this.cameras.main.height / 2,
+      "background"
+    );
+    bgImage.setScale(1).setScrollFactor(0);
+
     this.playerBulletGroup = this.physics.add.group({
       classType: PlayerBullet,
       maxSize: 1,

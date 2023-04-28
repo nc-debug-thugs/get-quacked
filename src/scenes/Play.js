@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "../classes/Player";
 import BaseBullet from "../classes/BaseBullet";
 import Hunter from "../classes/Hunter";
+import Health from "../classes/health";
 
 class PlayerBullet extends BaseBullet {
   constructor(scene) {
@@ -18,6 +19,10 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
+    this.playerHealth = 3;
+
+    this.health = new Health(this);
+
     this.cursors = this.input.keyboard.createCursorKeys();
 
     let bgImage = this.add.image(
@@ -78,6 +83,7 @@ export default class Play extends Phaser.Scene {
     }
     if (this.cursors.space.isDown) {
       this.player.shoot();
+      this.health.changeHealth();
     }
   }
 }

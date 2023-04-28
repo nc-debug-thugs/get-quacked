@@ -1,4 +1,6 @@
 import Phaser from 'phaser'
+import Boot from './scenes/Boot'
+import Play from './scenes/Play'
 
 const config = {
 	type: Phaser.AUTO,
@@ -10,7 +12,7 @@ const config = {
 		arcade: {
 		},
 	},
-	scene: [],
+	scene: [Boot, Play],
 }
 
 export default new Phaser.Game(config)

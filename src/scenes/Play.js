@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import Player from "../classes/Player";
 import BaseBullet from "../classes/BaseBullet";
 import Hunter from "../classes/Hunter";
-import Health from "../classes/health";
+import Health from "../classes/Health";
 import Shields from "../classes/Shields";
 
 class PlayerBullet extends BaseBullet {

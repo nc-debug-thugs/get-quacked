@@ -2,7 +2,9 @@ import Phaser from "phaser";
 import Player from "../classes/Player";
 import BaseBullet from "../classes/BaseBullet";
 import Hunter from "../classes/Hunter";
+import Health from "../classes/health";
 import Shields from "../classes/Shields";
+
 
 class PlayerBullet extends BaseBullet {
   constructor(scene) {
@@ -26,6 +28,8 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
+    this.health = new Health(this, 3);
+
     this.cursors = this.input.keyboard.createCursorKeys();
 
     //score

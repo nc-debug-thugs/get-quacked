@@ -1,18 +1,19 @@
-import Phaser from 'phaser'
-import Boot from './scenes/Boot'
-import Play from './scenes/Play'
+import Phaser from "phaser";
+import Boot from "./scenes/Boot";
+import Play from "./scenes/Play";
 
 const config = {
-	type: Phaser.AUTO,
-	parent: 'app',
-	width: 800,
-	height: 600,
-	physics: {
-		default: 'arcade',
-		arcade: {
-		},
-	},
-	scene: [Boot, Play],
-}
+  type: Phaser.AUTO,
+  parent: "app",
+  width: 800,
+  height: 600,
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: true,
+    },
+  },
+  scene: [Boot, Play],
+};
 
-export default new Phaser.Game(config)
+export default new Phaser.Game(config);

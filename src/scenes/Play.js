@@ -79,8 +79,8 @@ export default class Play extends Phaser.Scene {
       this
     );
   }
-  handlePlayerHit(player, enemyBullet) {
-    enemyBullet.destroy();
+  handlePlayerHit(player, hunterBulletGroup) {
+    console.log("touching");
   }
 
   update() {
@@ -104,23 +104,7 @@ export default class Play extends Phaser.Scene {
           this.player.y
         ) < 300
       ) {
-        let bullet = this.hunterBulletGroup.get();
-        if (bullet) {
-          bullet.fire(
-            hunter.x,
-            hunter.y,
-            (180 / 3.14) *
-              Phaser.Math.Angle.Between(
-                hunter.x,
-                hunter.y,
-                this.player.x,
-                this.player.y
-              ),
-            0,
-            10,
-            200
-          );
-        }
+        hunter.shoot(this.player, this.hunterBulletGroup);
       }
     });
   }

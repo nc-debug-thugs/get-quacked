@@ -21,6 +21,14 @@ export default class Play extends Phaser.Scene {
   create() {
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    //score
+    this.score = 0;
+    this.scoreText = this.add
+      .text(600, 20, `Score: ${this.score}`, {
+        fontSize: 24,
+      })
+      .setDepth(1);
+
     let bgImage = this.add.image(
       this.cameras.main.width / 2,
       this.cameras.main.height / 2,

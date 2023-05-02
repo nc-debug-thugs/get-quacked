@@ -10,6 +10,13 @@ class PlayerBullet extends BaseBullet {
   }
 }
 
+class HunterBullet extends BaseBullet {
+  constructor(scene) {
+    super(scene, "hunter_bullet");
+    this.setScale(0.03);
+  }
+}
+
 export default class Play extends Phaser.Scene {
   constructor() {
     super({
@@ -46,7 +53,11 @@ export default class Play extends Phaser.Scene {
 
     this.hunters.addMultiple([this.hunter1, this.hunter2, this.hunter3]);
 
-    console.log(this.hunters);
+    this.hunterBulletGroup = this.physics.add.group({
+      classType: HunterBullet,
+      maxSize: 5,
+      runChildUpdate: true,
+    });
 
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);
@@ -60,13 +71,16 @@ export default class Play extends Phaser.Scene {
       );
     });
 
-    // this.hunter = new Hunter(this, this.path, 0, 0);
-    // this.add.existing(this.hunter);
-    // this.hunters.startFollow({
-    //   duration: 9000,
-    //   repeat: -1,
-    //   rotateToPath: true,
-    // });
+    this.physics.add.overlap(
+      this.player,
+      this.hunterBulletGroup,
+      this.handlePlayerHit,
+      null,
+      this
+    );
+  }
+  handlePlayerHit(player, enemyBullet) {
+    enemyBullet.destroy();
   }
 
   update() {
@@ -79,5 +93,35 @@ export default class Play extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.player.shoot();
     }
+
+    //if disctance between player and enemy less than 300, hunter fire bullet towards the player
+    this.hunters.getChildren().forEach((hunter) => {
+      if (
+        Phaser.Math.Distance.Between(
+          hunter.x,
+          hunter.y,
+          this.player.x,
+          this.player.y
+        ) < 300
+      ) {
+        let bullet = this.hunterBulletGroup.get();
+        if (bullet) {
+          bullet.fire(
+            hunter.x,
+            hunter.y,
+            (180 / 3.14) *
+              Phaser.Math.Angle.Between(
+                hunter.x,
+                hunter.y,
+                this.player.x,
+                this.player.y
+              ),
+            0,
+            10,
+            200
+          );
+        }
+      }
+    });
   }
 }

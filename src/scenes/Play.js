@@ -66,10 +66,19 @@ export default class Play extends Phaser.Scene {
       null,
       this
     );
+
+    // explosion animation
+    const explosion = {
+      key: "explode",
+      frames: "boom",
+      hideOnComplete: true,
+    };
+    this.anims.create(explosion);
   }
 
   handleEnemyHit(playerBullet, hunter) {
     playerBullet.destroy();
+    this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.destroy();
   }
 

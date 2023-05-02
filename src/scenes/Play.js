@@ -40,8 +40,15 @@ export default class Play extends Phaser.Scene {
       runChildUpdate: true,
     });
 
+    this.hunterBulletGroup = this.physics.add.group({
+      classType: HunterBullet,
+      maxSize: 5,
+      runChildUpdate: true,
+    });
+
     this.player = new Player(this, 400, 300, "duck", this.playerBulletGroup);
     this.add.existing(this.player);
+    this.playerGroup = this.physics.add.group(this.player);
 
     this.path = new Phaser.Curves.Path();
     this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
@@ -52,12 +59,6 @@ export default class Play extends Phaser.Scene {
     this.hunter3 = new Hunter(this, this.path, 0, 0);
 
     this.hunters.addMultiple([this.hunter1, this.hunter2, this.hunter3]);
-
-    this.hunterBulletGroup = this.physics.add.group({
-      classType: HunterBullet,
-      maxSize: 5,
-      runChildUpdate: true,
-    });
 
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);
@@ -72,15 +73,15 @@ export default class Play extends Phaser.Scene {
     });
 
     this.physics.add.overlap(
-      this.player,
+      this.playerGroup,
       this.hunterBulletGroup,
       this.handlePlayerHit,
       null,
       this
     );
   }
-  handlePlayerHit(player, hunterBulletGroup) {
-    console.log("touching");
+  handlePlayerHit(player, hunterBullet) {
+    hunterBullet.destroy();
   }
 
   update() {

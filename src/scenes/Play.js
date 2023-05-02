@@ -19,9 +19,7 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
-    this.playerHealth = 3;
-
-    this.health = new Health(this);
+    this.health = new Health(this, 3);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -83,7 +81,6 @@ export default class Play extends Phaser.Scene {
     }
     if (this.cursors.space.isDown) {
       this.player.shoot();
-      this.health.changeHealth();
     }
   }
 }

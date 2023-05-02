@@ -3,7 +3,7 @@ export default class Shields extends Phaser.GameObjects.Sprite {
     super(scene, 0, 0, "bullet");
     this.setVisible(true);
     this.setActive(true);
-    this.setScale(0.8);
+    this.setScale(0.6);
     this.hp = 3;
   }
   hit() {

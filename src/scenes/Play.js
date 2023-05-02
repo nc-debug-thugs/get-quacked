@@ -20,6 +20,14 @@ export default class Play extends Phaser.Scene {
   create() {
     this.cursors = this.input.keyboard.createCursorKeys();
 
+    //score
+    this.score = 0;
+    this.scoreText = this.add
+      .text(600, 20, `Score: ${this.score}`, {
+        fontSize: 24,
+      })
+      .setDepth(1);
+
     let bgImage = this.add.image(
       this.cameras.main.width / 2,
       this.cameras.main.height / 2,
@@ -45,8 +53,6 @@ export default class Play extends Phaser.Scene {
     this.hunter3 = new Hunter(this, this.path, 0, 0);
 
     this.hunters.addMultiple([this.hunter1, this.hunter2, this.hunter3]);
-
-    console.log(this.hunters);
 
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);

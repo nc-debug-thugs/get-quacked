@@ -62,7 +62,7 @@ export default class Play extends Phaser.Scene {
       onUpdate: function () {},
     });
 
-    this.hunters = this.add.group({});
+    this.hunters = this.physics.add.group({});
     this.hunter1 = new Hunter(this, this.path, 0, 0);
     this.hunter2 = new Hunter(this, this.path, 0, 0);
     this.hunter3 = new Hunter(this, this.path, 0, 0);

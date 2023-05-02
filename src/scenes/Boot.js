@@ -17,13 +17,13 @@ export default class Boot extends Phaser.Scene {
       frameWidth: 59,
       frameHeight: 51,
       endFrame: 1,
+    });
 
     this.load.image("hunter_bullet", "../assets/images/hunter_bullet.png");
     this.load.spritesheet("boom", "../assets/images/explosion.png", {
       frameWidth: 64,
       frameHeight: 64,
       endFrame: 23,
-
     });
 
     this.load.on("complete", () => {

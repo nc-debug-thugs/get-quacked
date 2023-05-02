@@ -5,7 +5,6 @@ import Hunter from "../classes/Hunter";
 import Health from "../classes/health";
 import Shields from "../classes/Shields";
 
-
 class PlayerBullet extends BaseBullet {
   constructor(scene) {
     super(scene, "bullet");

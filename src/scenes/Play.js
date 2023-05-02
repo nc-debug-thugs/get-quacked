@@ -61,32 +61,6 @@ export default class Play extends Phaser.Scene {
       onUpdate: function () {},
     });
 
-    // this.shieldsArray = [];
-    // this.shield1 = new Shields(this, 0, 0, "bullet");
-    // this.shield2 = new Shields(this, 0, 0, "bullet");
-    // this.shield3 = new Shields(this, 0, 0, "bullet");
-    // this.shield4 = new Shields(this, 0, 0, "bullet");
-    // this.shield5 = new Shields(this, 0, 0, "bullet");
-    // this.shield6 = new Shields(this, 0, 0, "bullet");
-    // this.shieldsArray.push(
-    //   this.shield1,
-    //   this.shield2,
-    //   this.shield3,
-    //   this.shield4,
-    //   this.shield5,
-    //   this.shield6
-    // );
-
-    // this.shieldsGroup = this.add.group();
-    // this.shieldsGroup.addMultiple(this.shieldsArray);
-
-    // console.log(this.shieldsGroup);
-
-    // Phaser.Actions.PlaceOnCircle(
-    //   this.shieldsGroup.getChildren(),
-    //   this.shieldCircle
-    // );
-
     this.hunters = this.add.group({});
     this.hunter1 = new Hunter(this, this.path, 0, 0);
     this.hunter2 = new Hunter(this, this.path, 0, 0);
@@ -105,14 +79,6 @@ export default class Play extends Phaser.Scene {
         i * 0.05
       );
     });
-
-    // this.hunter = new Hunter(this, this.path, 0, 0);
-    // this.add.existing(this.hunter);
-    // this.hunters.startFollow({
-    //   duration: 9000,
-    //   repeat: -1,
-    //   rotateToPath: true,
-    // });
 
     this.physics.add.overlap(
       this.playerBulletGroup,

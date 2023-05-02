@@ -11,6 +11,13 @@ class PlayerBullet extends BaseBullet {
   }
 }
 
+class HunterBullet extends BaseBullet {
+  constructor(scene) {
+    super(scene, "hunter_bullet");
+    this.setScale(0.03);
+  }
+}
+
 export default class Play extends Phaser.Scene {
   constructor() {
     super({
@@ -42,8 +49,15 @@ export default class Play extends Phaser.Scene {
       runChildUpdate: true,
     });
 
+    this.hunterBulletGroup = this.physics.add.group({
+      classType: HunterBullet,
+      maxSize: 5,
+      runChildUpdate: true,
+    });
+
     this.player = new Player(this, 400, 300, "duck", this.playerBulletGroup);
     this.add.existing(this.player);
+    this.playerGroup = this.physics.add.group(this.player);
 
     this.path = new Phaser.Curves.Path();
     this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
@@ -97,6 +111,14 @@ export default class Play extends Phaser.Scene {
       null,
       this
     );
+    // hunter bullet collide with player interaction
+    this.physics.add.overlap(
+      this.playerGroup,
+      this.hunterBulletGroup,
+      this.handlePlayerHit,
+      null,
+      this
+    );
 
     // explosion animation
     const explosion = {
@@ -115,6 +137,9 @@ export default class Play extends Phaser.Scene {
       this
     );
   }
+  handlePlayerHit(player, hunterBullet) {
+    hunterBullet.destroy();
+  }
 
   handleEnemyHit(playerBullet, hunter) {
     playerBullet.destroy();
@@ -132,6 +157,20 @@ export default class Play extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.player.shoot();
     }
+
+    //if disctance between player and enemy less than 300, hunter fire bullet towards the player
+    this.hunters.getChildren().forEach((hunter) => {
+      if (
+        Phaser.Math.Distance.Between(
+          hunter.x,
+          hunter.y,
+          this.player.x,
+          this.player.y
+        ) < 300
+      ) {
+        hunter.shoot(this.player, this.hunterBulletGroup);
+      }
+    });
     if (this.cursors.up.isDown) {
       Phaser.Actions.RotateAroundDistance(
         this.shieldGroup.getChildren(),

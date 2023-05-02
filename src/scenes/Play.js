@@ -40,6 +40,7 @@ export default class Play extends Phaser.Scene {
     this.path = new Phaser.Curves.Path();
     this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
 
+    this.hunters = this.physics.add.group({});
     this.shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
 
     this.shieldGroup = this.physics.add.group({
@@ -61,7 +62,7 @@ export default class Play extends Phaser.Scene {
       onUpdate: function () {},
     });
 
-    this.hunters = this.add.group({});
+    this.hunters = this.physics.add.group({});
     this.hunter1 = new Hunter(this, this.path, 0, 0);
     this.hunter2 = new Hunter(this, this.path, 0, 0);
     this.hunter3 = new Hunter(this, this.path, 0, 0);
@@ -80,6 +81,24 @@ export default class Play extends Phaser.Scene {
       );
     });
 
+    // player bullet and hunter interaction
+    this.physics.add.overlap(
+      this.playerBulletGroup,
+      this.hunters,
+      this.handleEnemyHit,
+      null,
+      this
+    );
+
+    // explosion animation
+    const explosion = {
+      key: "explode",
+      frames: "boom",
+      hideOnComplete: true,
+    };
+    this.anims.create(explosion);
+
+    // player bullet and shield interaction
     this.physics.add.overlap(
       this.playerBulletGroup,
       this.shieldGroup,
@@ -87,6 +106,12 @@ export default class Play extends Phaser.Scene {
       null,
       this
     );
+  }
+
+  handleEnemyHit(playerBullet, hunter) {
+    playerBullet.destroy();
+    this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
+    hunter.destroy();
   }
 
   update() {

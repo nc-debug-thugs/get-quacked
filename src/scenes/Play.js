@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "../classes/Player";
 import BaseBullet from "../classes/BaseBullet";
 import Hunter from "../classes/Hunter";
+import Shields from "../classes/Shields";
 
 class PlayerBullet extends BaseBullet {
   constructor(scene) {
@@ -39,14 +40,33 @@ export default class Play extends Phaser.Scene {
     this.path = new Phaser.Curves.Path();
     this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
 
+    this.shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
+
+    this.shieldGroup = this.physics.add.group({
+      key: "bullet",
+      repeat: 5,
+      classType: Shields,
+    });
+
+    Phaser.Actions.PlaceOnCircle(
+      this.shieldGroup.getChildren(),
+      this.shieldCircle
+    );
+
+    this.tweens.add({
+      targets: this.shieldCircle,
+      radius: 100,
+      duration: 5000,
+      repeat: -1,
+      onUpdate: function () {},
+    });
+
     this.hunters = this.add.group({});
     this.hunter1 = new Hunter(this, this.path, 0, 0);
     this.hunter2 = new Hunter(this, this.path, 0, 0);
     this.hunter3 = new Hunter(this, this.path, 0, 0);
 
     this.hunters.addMultiple([this.hunter1, this.hunter2, this.hunter3]);
-
-    console.log(this.hunters);
 
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);
@@ -60,13 +80,13 @@ export default class Play extends Phaser.Scene {
       );
     });
 
-    // this.hunter = new Hunter(this, this.path, 0, 0);
-    // this.add.existing(this.hunter);
-    // this.hunters.startFollow({
-    //   duration: 9000,
-    //   repeat: -1,
-    //   rotateToPath: true,
-    // });
+    this.physics.add.overlap(
+      this.playerBulletGroup,
+      this.shieldGroup,
+      this.handleShieldCollision,
+      null,
+      this
+    );
   }
 
   update() {
@@ -79,5 +99,25 @@ export default class Play extends Phaser.Scene {
     if (this.cursors.space.isDown) {
       this.player.shoot();
     }
+    if (this.cursors.up.isDown) {
+      Phaser.Actions.RotateAroundDistance(
+        this.shieldGroup.getChildren(),
+        { x: 400, y: 300 },
+        -0.005,
+        100
+      );
+    }
+    if (this.cursors.down.isDown) {
+      Phaser.Actions.RotateAroundDistance(
+        this.shieldGroup.getChildren(),
+        { x: 400, y: 300 },
+        +0.005,
+        100
+      );
+    }
+  }
+  handleShieldCollision(bullet, shield) {
+    bullet.destroy();
+    shield.hit();
   }
 }

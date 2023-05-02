@@ -17,5 +17,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
     }
   }
+
   handleCollision() {}
 }

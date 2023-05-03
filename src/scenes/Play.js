@@ -119,8 +119,10 @@ export default class Play extends Phaser.Scene {
         delay: Phaser.Math.Between(1000, 10000),
         loop: true,
         callback: () => {
-          hunter.shoot(this.player, this.hunterBulletGroup);
-          timer.delay = Phaser.Math.Between(1000, 5000);
+          if (hunter.isAlive) {
+            hunter.shoot(this.player, this.hunterBulletGroup);
+            timer.delay = Phaser.Math.Between(1000, 5000);
+          }
         },
         callbackScope: this,
       });
@@ -185,9 +187,12 @@ export default class Play extends Phaser.Scene {
     this.scoreText.setText(`Score: ${score}`);
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
+    hunter.isAlive = false;
     hunter.destroy();
     this.hunterShootTimers.forEach((timer) => {
-      timer.destroy();
+      if (timer.args[0] === hunter) {
+        timer.destroy();
+      }
     });
   }
 

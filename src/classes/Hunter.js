@@ -4,7 +4,7 @@ export default class Hunter extends Phaser.GameObjects.PathFollower {
   constructor(scene, path, x, y, hunterBulletGroup) {
     super(scene, path, x, y, "hunter");
     this.setScale(0.1);
-
+    this.isAlive = true;
     this.hunterBulletGroup = hunterBulletGroup;
   }
 

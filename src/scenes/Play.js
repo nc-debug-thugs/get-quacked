@@ -26,10 +26,37 @@ export default class Play extends Phaser.Scene {
     });
   }
 
+  moveEnemies() {
+    console.log('move', this.movedir)
+    this.moveint += 1
+    const steps = this.movesteps + 1
+    if (this.moveint > steps) {
+      this.movedir = 'right'
+    }
+    if (this.moveint % steps === 0) {
+      this.movedir = 'down'
+    }
+    if (this.moveint > steps * 2) {
+      this.moveint = 1
+      this.movedir = 'left'
+    }
+  }
+
   create() {
     this.health = new Health(this, 3);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    //intervals
+    this.moveint = 1
+    this.movedir = 'left'
+    this.movesteps = 10
+    this.enemyMoveInterval = this.time.addEvent({
+      delay: 500,
+      loop: true,
+      callbackScope: this,
+      callback: this.moveEnemies
+    })
 
     //score
     this.score = 0;
@@ -161,7 +188,7 @@ export default class Play extends Phaser.Scene {
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
     if (this.health.decreaseHealth()) {
-      console.log('game over man!')
+      // console.log('game over man!')
     }
   }
 

@@ -96,6 +96,7 @@ export default class Play extends Phaser.Scene {
 
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);
+      hunter.body.setSize(450, 450)
       hunter.startFollow(
         {
           duration: 9000,

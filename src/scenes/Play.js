@@ -147,6 +147,15 @@ export default class Play extends Phaser.Scene {
       null,
       this
     );
+
+    //hunter bullet and shield interaction
+    this.physics.add.overlap(
+      this.hunterBulletGroup,
+      this.shieldGroup,
+      this.handleShieldCollision,
+      null,
+      this
+    );
   }
 
   handlePlayerHit(player, hunterBullet) {

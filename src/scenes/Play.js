@@ -5,6 +5,8 @@ import Hunter from "../classes/Hunter";
 import Health from "../classes/Health";
 import Shields from "../classes/Shields";
 
+let score = 0;
+
 class PlayerBullet extends BaseBullet {
   constructor(scene) {
     super(scene, "bullet");
@@ -32,9 +34,9 @@ export default class Play extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     //score
-    this.score = 0;
+    score = 0;
     this.scoreText = this.add
-      .text(600, 20, `Score: ${this.score}`, {
+      .text(600, 20, `Score: ${score}`, {
         fontSize: 24,
       })
       .setDepth(1);
@@ -183,13 +185,13 @@ export default class Play extends Phaser.Scene {
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
     if (this.health.decreaseHealth()) {
-      console.log('game over man!')
+      console.log("game over man!");
     }
   }
 
   handleEnemyHit(playerBullet, hunter) {
-    this.score += 100;
-    this.scoreText.setText(`Score: ${this.score}`);
+    score += 100;
+    this.scoreText.setText(`Score: ${score}`);
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.destroy();

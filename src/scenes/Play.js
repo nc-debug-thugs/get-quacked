@@ -176,8 +176,8 @@ export default class Play extends Phaser.Scene {
 
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
+
     if (this.health.decreaseHealth()) {
-      console.log("game over man!");
       this.scene.start("gameover");
     }
   }
@@ -205,9 +205,11 @@ export default class Play extends Phaser.Scene {
     if (this.cursors.left.isDown) {
       this.player.angle -= 2;
     }
+
     if (this.cursors.right.isDown) {
       this.player.angle += 2;
     }
+
     if (this.cursors.space.isDown) {
       this.player.shoot();
     }

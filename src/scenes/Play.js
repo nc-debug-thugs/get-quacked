@@ -100,28 +100,7 @@ export default class Play extends Phaser.Scene {
 
     this.hunters.addMultiple([this.hunter1, this.hunter2, this.hunter3]);
 
-    this.hunters.getChildren().forEach((hunter) => {
-      this.add.existing(hunter);
-      hunter.body.setSize(450, 450);
-      hunter.startFollow({
-        duration: 9000,
-        repeat: -1,
-        rotateToPath: true,
-      });
-
-      this.hunterShootTimers = [];
-      // Random hunter selected to shoot at random time
-      const timer = this.time.addEvent({
-        delay: Phaser.Math.Between(1000, 10000),
-        loop: true,
-        callback: () => {
-          hunter.shoot(this.player, this.hunterBulletGroup);
-          timer.delay = Phaser.Math.Between(1000, 5000);
-        },
-        callbackScope: this,
-      });
-      this.hunterShootTimers.push(timer);
-    });
+    this.hunterShootTimers = [];
 
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);
@@ -134,6 +113,18 @@ export default class Play extends Phaser.Scene {
         },
         i * 0.05
       );
+
+      // Random hunter selected to shoot at random time
+      const timer = this.time.addEvent({
+        delay: Phaser.Math.Between(1000, 10000),
+        loop: true,
+        callback: () => {
+          hunter.shoot(this.player, this.hunterBulletGroup);
+          timer.delay = Phaser.Math.Between(1000, 5000);
+        },
+        callbackScope: this,
+      });
+      this.hunterShootTimers.push(timer);
     });
 
     // player bullet and hunter interaction
@@ -195,6 +186,9 @@ export default class Play extends Phaser.Scene {
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.destroy();
+    this.hunterShootTimers.forEach((timer) => {
+      timer.destroy();
+    });
   }
 
   handleShieldCollision(bullet, shield) {

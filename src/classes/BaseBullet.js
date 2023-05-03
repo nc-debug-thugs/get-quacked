@@ -15,7 +15,7 @@ export default class BaseBullet extends Phaser.Physics.Arcade.Sprite {
     );
     this.setVelocity(vector.x, vector.y);
     this.setAngle(angle + drawAngleOffset);
-    this.body.setSize(500, 500)
+    this.body.setSize(50, 50)
     this.setActive(true);
     this.setVisible(true);
   }

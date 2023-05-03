@@ -7,7 +7,7 @@ export default class Health {
     this.maxHealth = maxHealth;
     this.currentHealth = maxHealth;
 
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i <= maxHealth; i++) {
       this.healthSprites.push(
         scene.add
           .sprite(30 * i, 30, "health", 0)

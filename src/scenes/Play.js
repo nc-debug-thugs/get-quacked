@@ -114,6 +114,7 @@ export default class Play extends Phaser.Scene {
       null,
       this
     );
+
     // hunter bullet collide with player interaction
     this.physics.add.overlap(
       this.playerGroup,
@@ -140,11 +141,14 @@ export default class Play extends Phaser.Scene {
       this
     );
   }
+
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
   }
 
   handleEnemyHit(playerBullet, hunter) {
+    this.score += 100;
+    this.scoreText.setText(`Score: ${this.score}`);
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.destroy();

@@ -60,9 +60,8 @@ export default class Play extends Phaser.Scene {
 
     this.player = new Player(this, 400, 300, "duck", this.playerBulletGroup);
     this.playerGroup = this.physics.add.group(this.player);
-    this.player.body.setSize(450, 450)
+    this.player.body.setSize(450, 450);
     this.add.existing(this.player);
-
 
     this.path = new Phaser.Curves.Path();
     this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
@@ -77,8 +76,8 @@ export default class Play extends Phaser.Scene {
     });
 
     this.shieldGroup.getChildren().forEach((shield) => {
-      shield.body.setSize(50, 50)
-    })
+      shield.body.setSize(50, 50);
+    });
 
     Phaser.Actions.PlaceOnCircle(
       this.shieldGroup.getChildren(),
@@ -100,9 +99,32 @@ export default class Play extends Phaser.Scene {
 
     this.hunters.addMultiple([this.hunter1, this.hunter2, this.hunter3]);
 
+    this.hunters.getChildren().forEach((hunter) => {
+      this.add.existing(hunter);
+      hunter.body.setSize(450, 450);
+      hunter.startFollow({
+        duration: 9000,
+        repeat: -1,
+        rotateToPath: true,
+      });
+
+      this.hunterShootTimers = [];
+      // Random hunter selected to shoot at random time
+      const timer = this.time.addEvent({
+        delay: Phaser.Math.Between(1000, 10000),
+        loop: true,
+        callback: () => {
+          hunter.shoot(this.player, this.hunterBulletGroup);
+          timer.delay = Phaser.Math.Between(1000, 5000);
+        },
+        callbackScope: this,
+      });
+      this.hunterShootTimers.push(timer);
+    });
+
     this.hunters.getChildren().forEach((hunter, i, hunters) => {
       this.add.existing(hunter);
-      hunter.body.setSize(450, 450)
+      hunter.body.setSize(450, 450);
       hunter.startFollow(
         {
           duration: 9000,
@@ -172,19 +194,6 @@ export default class Play extends Phaser.Scene {
       this.player.shoot();
     }
 
-    //if disctance between player and enemy less than 300, hunter fire bullet towards the player
-    this.hunters.getChildren().forEach((hunter) => {
-      if (
-        Phaser.Math.Distance.Between(
-          hunter.x,
-          hunter.y,
-          this.player.x,
-          this.player.y
-        ) < 300
-      ) {
-        hunter.shoot(this.player, this.hunterBulletGroup);
-      }
-    });
     if (this.cursors.up.isDown) {
       Phaser.Actions.RotateAroundDistance(
         this.shieldGroup.getChildren(),

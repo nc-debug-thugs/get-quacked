@@ -9,14 +9,22 @@ export default class GameOver extends Phaser.Scene {
   }
 
   create() {
+    const screenCenterX =
+      this.cameras.main.worldView.x + this.cameras.main.width / 2;
+    const screenCenterY =
+      this.cameras.main.worldView.y + this.cameras.main.height / 2;
+
     this.gameOverText = this.add
-      .text(200, 200, "GAME OVER", { fontSize: 48 })
-      .setDepth(1);
+      .text(screenCenterX, screenCenterY - 20, "GAME OVER", { fontSize: 48 })
+      .setDepth(1)
+      .setOrigin(0.5);
+
     this.scoreText = this.add
-      .text(200, 260, `Your score is ${score}`, {
+      .text(screenCenterX, screenCenterY + 40, `Your score is ${score}`, {
         fontSize: 24,
       })
-      .setDepth(1);
+      .setDepth(1)
+      .setOrigin(0.5);
   }
 
   update() {}

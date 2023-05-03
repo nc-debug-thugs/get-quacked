@@ -212,7 +212,7 @@ export default class Play extends Phaser.Scene {
       Phaser.Actions.RotateAroundDistance(
         this.shieldGroup.getChildren(),
         { x: 400, y: 300 },
-        -0.005,
+        -0.015,
         100
       );
     }
@@ -220,7 +220,7 @@ export default class Play extends Phaser.Scene {
       Phaser.Actions.RotateAroundDistance(
         this.shieldGroup.getChildren(),
         { x: 400, y: 300 },
-        +0.005,
+        +0.015,
         100
       );
     }

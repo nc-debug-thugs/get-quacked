@@ -151,6 +151,9 @@ export default class Play extends Phaser.Scene {
 
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
+    if (this.health.decreaseHealth()) {
+      console.log('game over man!')
+    }
   }
 
   handleEnemyHit(playerBullet, hunter) {

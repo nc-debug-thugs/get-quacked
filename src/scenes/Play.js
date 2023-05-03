@@ -76,6 +76,10 @@ export default class Play extends Phaser.Scene {
       classType: Shields,
     });
 
+    this.shieldGroup.getChildren().forEach((shield) => {
+      shield.body.setSize(50, 50)
+    })
+
     Phaser.Actions.PlaceOnCircle(
       this.shieldGroup.getChildren(),
       this.shieldCircle

@@ -11,6 +11,7 @@ const config = {
     default: "arcade",
     arcade: {
       debug: true,
+      fps: 60
     },
   },
   scene: [Boot, Play],

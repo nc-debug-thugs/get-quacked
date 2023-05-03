@@ -7,6 +7,8 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     this.setDepth(2)
 
     this.bulletGroup = bulletGroup;
+
+    scene.add.existing(this)
   }
 
   shoot() {

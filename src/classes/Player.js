@@ -9,12 +9,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setScale(0.06);
 
     this.bulletGroup = bulletGroup;
+    this.hasShot = false
   }
 
   shoot() {
-    const bullet = this.bulletGroup.get();
-    if (bullet) {
-      bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
+    if (!this.hasShot) {
+      const bullet = this.bulletGroup.get();
+      if (bullet) {
+        bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
+        this.hasShot = true
+        this.scene.time.addEvent({
+          delay: 500,
+          loop: false,
+          callbackScope: this,
+          callback: () => {
+            this.hasShot = false
+          }
+        })
+      }
     }
   }
 

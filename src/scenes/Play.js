@@ -123,6 +123,19 @@ export default class Play extends Phaser.Scene {
       callback: this.updateEnemyMoves
     })
 
+    this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callbackScope: this,
+      callback: () => {
+        if (this.enemies.getChildren().length !== 0) {
+          const rnd = Math.floor(Math.random() * this.enemies.getChildren().length)
+          console.log(rnd)
+          this.enemies.getChildren()[rnd].shoot()
+        }
+      }
+    })
+
     //score
     this.score = 0;
     this.scoreText = this.add
@@ -179,12 +192,19 @@ export default class Play extends Phaser.Scene {
     });
 
     //new enemies
-    this.enemies = this.physics.add.group({
-      key: 'enemy', 
-      repeat: 9, 
-      classType: Enemy,
-      runChildUpdate: true
-    })
+    // this.enemies = this.physics.add.group({
+    //   key: 'enemy', 
+    //   classType: Enemy, 
+    //   repeat: 9, 
+    //   runChildUpdate: true
+    // })
+
+    this.enemies = this.physics.add.group()
+    for (let i = 0; i < 10; i++) {
+      this.enemies.add(new Enemy(this, 0,0,this.hunterBulletGroup))
+    }
+    this.enemies.runChildUpdate = true
+
     this.enemyCircle = new Phaser.Geom.Circle(400, 300, 300)
     this.enemyCircle2 = new Phaser.Geom.Circle(400, 300, 350)
     this.enemies1 = this.enemies.getChildren().slice(0, Math.floor(this.enemies.getChildren().length / 2))
@@ -239,14 +259,14 @@ export default class Play extends Phaser.Scene {
       this
     );
 
-    // // hunter bullet collide with player interaction
-    // this.physics.add.overlap(
-    //   this.playerGroup,
-    //   this.hunterBulletGroup,
-    //   this.handlePlayerHit,
-    //   null,
-    //   this
-    // );
+    // hunter bullet collide with player interaction
+    this.physics.add.overlap(
+      this.playerGroup,
+      this.hunterBulletGroup,
+      this.handlePlayerHit,
+      null,
+      this
+    );
 
     // explosion animation
     const explosion = {

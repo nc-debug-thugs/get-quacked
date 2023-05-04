@@ -1,9 +1,10 @@
 import Phaser from "phaser";
+
 import Health from "../classes/Health";
 import EnemyHelper from "../classes/EnemyHelper"
 import PlayerHelper from "../classes/PlayerHelper"
 
-export let score = 0;
+import { score, round, updateScore } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -29,6 +30,13 @@ export default class Play extends Phaser.Scene {
     this.playerBulletGroup = playerBulletGroup
     this.shieldGroup = shieldGroup
 
+    //round
+    this.roundText = this.add
+      .text(600, 520, `Round ${round}`, {
+        fontSize: 24,
+      })
+      .setDepth(1);
+
     //score
     this.scoreText = this.add
       .text(600, 20, `Score: ${score}`, {
@@ -49,7 +57,7 @@ export default class Play extends Phaser.Scene {
       delay: Phaser.Math.Between(1000, 2000),
       loop: true,
       callback: () => {
-        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot()
+        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
       },
       callbackScope: this,
     });
@@ -112,8 +120,8 @@ export default class Play extends Phaser.Scene {
   }
 
   handleEnemyHit(playerBullet, hunter) {
-    score += 100;
-    this.scoreText.setText(`Score: ${score}`);
+    const newScore = updateScore(100);
+    this.scoreText.setText(`Score: ${newScore}`);
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.isAlive = false;
@@ -124,7 +132,6 @@ export default class Play extends Phaser.Scene {
     bullet.destroy();
     shield.hit();
   }
-
 
   update() {
     this.enemyHelper.moveEnemies()

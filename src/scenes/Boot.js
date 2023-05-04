@@ -12,7 +12,8 @@ export default class Boot extends Phaser.Scene {
     this.load.image("bullet", "../assets/images/egg.png");
     this.load.image("hunter", "../assets/images/hunter.png");
     this.load.image("background", "../assets/images/background.png");
-
+    this.load.image("start", "../assets/images/start.png");
+    this.load.image("spacebar", "../assets/images/spacebar.png");
     this.load.spritesheet("health", "../assets/images/health.png", {
       frameWidth: 59,
       frameHeight: 51,
@@ -25,9 +26,9 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
       endFrame: 23,
     });
+  }
 
-    this.load.on("complete", () => {
-      this.scene.start("play");
-    });
+  create() {
+    this.scene.start("start");
   }
 }

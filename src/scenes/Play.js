@@ -119,14 +119,14 @@ export default class Play extends Phaser.Scene {
     //   this.hunterShootTimers.push(timer);
     // });
 
-    // // player bullet and hunter interaction
-    // this.physics.add.overlap(
-    //   this.playerBulletGroup,
-    //   this.hunters,
-    //   this.handleEnemyHit,
-    //   null,
-    //   this
-    // );
+    // player bullet and hunter interaction
+    this.physics.add.overlap(
+      this.playerBulletGroup,
+      this.hunters,
+      this.handleEnemyHit,
+      null,
+      this
+    );
 
     // // hunter bullet collide with player interaction
     // this.physics.add.overlap(

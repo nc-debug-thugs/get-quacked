@@ -4,8 +4,7 @@ import Hunter from '../classes/Hunter'
 export default class EnemyHelper {
   constructor(scene) {
     this.scene = scene
-    this.gameWidth = this.scene.scale.gameSize.width;
-    this.gameHeight = this.scene.scale.gameSize.height;
+    this.centerPoint = { x: this.scene.scale.gameSize.width / 2, y: this.scene.scale.gameSize.height / 2 };
 
     this.circleStartRadius = 300  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
@@ -47,7 +46,7 @@ export default class EnemyHelper {
     //set up enemy circles
     this.circles = []
     for (let i = 0; i < 3; i++) {
-      this.circles.push(new Phaser.Geom.Circle(this.gameWidth / 2, this.gameHeight / 2, this.circleStartRadius + this.circleStepRadius * i))
+      this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius + this.circleStepRadius * i))
     }
 
     //place hunters on circles and add them to the enemies group
@@ -105,18 +104,18 @@ export default class EnemyHelper {
     if (this.moving) {
       if (this.movePattern === 'clockwise') {
         for (let i = 0; i < this.hunters.length; i++) {
-          Phaser.Actions.RotateAroundDistance(this.hunters[i], {x: 400, y: 300 }, 0.005, this.circles[i].radius )
+          Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0.005, this.circles[i].radius )
         }
       }
       else if (this.movePattern === 'anti-clockwise') {
         for (let i = 0; i < this.hunters.length; i++) {
-          Phaser.Actions.RotateAroundDistance(this.hunters[i], {x: 400, y: 300 }, -0.005, this.circles[i].radius )
+          Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, -0.005, this.circles[i].radius )
         }
       }
       else if (this.movePattern === 'inward') {
         this.tween.resume()
         for (let i = 0; i < this.hunters.length; i++) {
-          Phaser.Actions.RotateAroundDistance(this.hunters[i], {x: 400, y: 300 }, 0, this.circles[i].radius )
+          Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0, this.circles[i].radius )
         }
       }
       else (console.log('no move pattern found'))

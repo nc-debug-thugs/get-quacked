@@ -20,33 +20,42 @@ export default class EnemyHelper {
     this.moveInt = 1
     this.movePattern = 'clockwise'
 
-    this.__startMoveEveryDelay()
+    this._startMoveEveryDelay()
   }
 
-  __startMoveEveryDelay() {
+  _startMoveEveryDelay() {
     this.scene.time.addEvent({
       delay: this.moveDelay,
       loop: false,
       callback: () => {
         this.moving = true
-        this.__startMoveForDelay()
+        this._startMoveForDelay()
       }
     })
   }
 
-  __startMoveForDelay() {
+  _startMoveForDelay() {
     this.scene.time.addEvent({
       delay: this.moveFor,
       loop: false,
       callback: () => {
         this.moving = false
-        this.__updateMovePattern()
-        this.__startMoveEveryDelay()
+        this._updateMovePattern()
+        this._startMoveEveryDelay()
       }
     })
   }
 
-  setupEnemies(enemyGroup, bulletGroup) {
+  setupEnemies() {
+    const enemyGroup = this.scene.physics.add.group({
+      runChildUpdate: true
+    })
+    const bulletGroup = this.scene.physics.add.group({
+      classType: HunterBullet,
+      maxSize: 30,
+      runChildUpdate: true,
+    });
+
     //set up enemy circles
     for (let i = 0; i < 3; i++) {
       this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius + this.circleStepRadius * i))
@@ -78,9 +87,11 @@ export default class EnemyHelper {
       duration: 6000,
       radius: 0
     })
+
+    return [enemyGroup, bulletGroup]
   }
 
-  __updateMovePattern() {
+  _updateMovePattern() {
     if (this.moveInt < 6) {
       this.movePattern = 'clockwise'
     }

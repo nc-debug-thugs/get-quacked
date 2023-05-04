@@ -31,10 +31,30 @@ export default class Play extends Phaser.Scene {
 
     //player setup
     this.playerHelper = new PlayerHelper(this)
-    let [player, playerGroup, playerBulletGroup] = this.playerHelper.setupPlayer()
+    let [player, playerGroup, playerBulletGroup, shieldGroup] = this.playerHelper.setupPlayer()
     this.player = player
     this.playerGroup = playerGroup
     this.playerBulletGroup = playerBulletGroup
+    // this.shieldGroup = shieldGroup
+
+
+    const shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
+    this.shieldGroup = this.physics.add.group({
+      key: "bullet",
+      repeat: 5,
+      classType: Shields,
+    });
+
+    this.shieldGroup.getChildren().forEach((shield) => {
+      shield.body.setSize(50, 50);
+    });
+
+    Phaser.Actions.PlaceOnCircle(
+      this.shieldGroup.getChildren(),
+      shieldCircle
+    );
+
+
 
     //score
     this.scoreText = this.add
@@ -50,22 +70,6 @@ export default class Play extends Phaser.Scene {
     );
     bgImage.setScale(1).setScrollFactor(0);
 
-    this.shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
-
-    this.shieldGroup = this.physics.add.group({
-      key: "bullet",
-      repeat: 5,
-      classType: Shields,
-    });
-
-    this.shieldGroup.getChildren().forEach((shield) => {
-      shield.body.setSize(50, 50);
-    });
-
-    Phaser.Actions.PlaceOnCircle(
-      this.shieldGroup.getChildren(),
-      this.shieldCircle
-    );
       // Random hunter selected to shoot at random time
       this.time.addEvent({
         delay: Phaser.Math.Between(1000, 2000),

@@ -8,6 +8,7 @@ export default class EnemyHelper {
 
     this.moving = false
     this.moveInt = 1
+    this.movePattern = 'clockwise'
 
     this.startMoveEveryDelay()
   }
@@ -29,6 +30,7 @@ export default class EnemyHelper {
       loop: false,
       callback: () => {
         this.moving = false
+        this.updateMovePattern()
         this.startMoveEveryDelay()
       }
     })
@@ -37,8 +39,22 @@ export default class EnemyHelper {
   setup() {
   }
 
+  updateMovePattern() {
+    if (this.moveInt < 6) {
+      this.movePattern = 'clockwise'
+    }
+    if (this.moveInt > 6) {
+      this.movePattern = 'anti-clockwise'
+    }
+    if (this.moveInt % 6 === 0) {
+      this.movePattern = 'inward'
+    }
+    this.moveInt += 1
+    if (this.moveInt > 12) this.moveInt = 1
+  }
+
   moveEnemies() {
-    console.log(this.moving)
+    console.log(this.movePattern)
   }
 
 }

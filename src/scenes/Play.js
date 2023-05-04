@@ -59,9 +59,6 @@ export default class Play extends Phaser.Scene {
     this.player.body.setSize(450, 450);
     this.add.existing(this.player);
 
-    this.path = new Phaser.Curves.Path();
-    this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
-
     this.shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
 
     this.shieldGroup = this.physics.add.group({

@@ -5,6 +5,8 @@ import Hunter from "../classes/Hunter";
 import Health from "../classes/Health";
 import Shields from "../classes/Shields";
 
+import EnemyHelper from "./enemyHelper"
+
 export let score = 0;
 
 class PlayerBullet extends BaseBullet {
@@ -32,6 +34,8 @@ export default class Play extends Phaser.Scene {
     this.health = new Health(this, 3);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.eh = new EnemyHelper(this)
 
     //score
     this.scoreText = this.add
@@ -208,7 +212,10 @@ export default class Play extends Phaser.Scene {
     shield.hit();
   }
 
+
   update() {
+    this.eh.moveEnemies()
+
     if (this.cursors.left.isDown) {
       this.player.angle -= 2;
     }

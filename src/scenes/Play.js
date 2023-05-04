@@ -66,15 +66,6 @@ export default class Play extends Phaser.Scene {
       this.shieldGroup.getChildren(),
       this.shieldCircle
     );
-
-    this.tweens.add({
-      targets: this.shieldCircle,
-      radius: 100,
-      duration: 5000,
-      repeat: -1,
-      onUpdate: function () {},
-    });
-
       // Random hunter selected to shoot at random time
       this.time.addEvent({
         delay: Phaser.Math.Between(1000, 2000),

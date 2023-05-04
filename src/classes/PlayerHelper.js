@@ -32,7 +32,7 @@ export default class PlayerHelper {
     Phaser.Actions.PlaceOnCircle(this.shields, shieldCircle)
     shieldGroup.addMultiple(this.shields)
 
-    return [this.player, playerGroup, bulletGroup, shieldGroup]
+    return [playerGroup, bulletGroup, shieldGroup]
   }
 
   movePlayer() {

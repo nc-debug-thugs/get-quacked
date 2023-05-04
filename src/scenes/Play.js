@@ -1,9 +1,5 @@
 import Phaser from "phaser";
-import Player from "../classes/Player";
-import HunterBullet from "../classes/HunterBullet"
-import PlayerBullet from "../classes/PlayerBullet"
 import Health from "../classes/Health";
-import Shields from "../classes/Shields";
 
 import EnemyHelper from "../classes/EnemyHelper"
 import PlayerHelper from "../classes/PlayerHelper"
@@ -31,8 +27,7 @@ export default class Play extends Phaser.Scene {
 
     //player setup
     this.playerHelper = new PlayerHelper(this)
-    let [player, playerGroup, playerBulletGroup, shieldGroup] = this.playerHelper.setupPlayer()
-    this.player = player
+    let [playerGroup, playerBulletGroup, shieldGroup] = this.playerHelper.setupPlayer()
     this.playerGroup = playerGroup
     this.playerBulletGroup = playerBulletGroup
     this.shieldGroup = shieldGroup

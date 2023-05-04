@@ -1,33 +1,5 @@
 import Phaser from 'phaser'
 
-// const moveDelay = 2000 //Delay in ms between enemy moves
-// const moveFor = 500 //Time in ms enemies move for
-
-// let moving = false
-// let movePattern = 'clockwise'
-// let moveint = 0
-
-// export function setUpEnemies(scene) {
-//   const moveIntervalTimer = scene.time.addEvent({
-//     delay: moveDelay,
-//     loop: false,
-//     callback: updateMovePattern()
-//   })
-// }
-
-// export function moveEnemies(scene) {
-// }
-
-// function updateMovePattern(scene) {
-//   moving = true
-//   scene.time.addEvent({
-//     delay: moveFor,
-//     loop: false,
-//     callback: () => {
-//     }
-//   })
-// }
-
 export default class EnemyHelper {
   constructor(scene) {
     this.scene = scene

@@ -33,9 +33,25 @@ export default class Start extends Phaser.Scene {
     );
     bgImage.setScale(1).setScrollFactor(0);
 
+    let shootSpaceBar = this.add.image(125, 550, "spacebar");
+
+    shootSpaceBar.setScale(3);
+    this.tweens.add({
+      targets: shootSpaceBar,
+      y: shootSpaceBar.y + 10,
+      duration: 500,
+      ease: "Sine.easeInOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
+    let shootSign = this.add.image(145, 560, "shoot");
+
+    shootSign.setScale(3);
+
     let startButton = this.add.image(
       this.cameras.main.width / 2,
-      this.cameras.main.height / 1.3,
+      this.cameras.main.height / 4,
       "start"
     );
     startButton.setScale(0.5);
@@ -70,7 +86,7 @@ export default class Start extends Phaser.Scene {
     this.add.existing(this.player);
 
     this.path = new Phaser.Curves.Path();
-    this.path.add(new Phaser.Curves.Ellipse(400, 300, 265));
+    this.path.add(new Phaser.Curves.Ellipse(400, 300, 230));
 
     this.hunters = this.physics.add.group({});
     this.shieldCircle = new Phaser.Geom.Circle(400, 300, 100);

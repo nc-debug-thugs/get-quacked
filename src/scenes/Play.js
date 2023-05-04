@@ -35,26 +35,7 @@ export default class Play extends Phaser.Scene {
     this.player = player
     this.playerGroup = playerGroup
     this.playerBulletGroup = playerBulletGroup
-    // this.shieldGroup = shieldGroup
-
-
-    const shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
-    this.shieldGroup = this.physics.add.group({
-      key: "bullet",
-      repeat: 5,
-      classType: Shields,
-    });
-
-    this.shieldGroup.getChildren().forEach((shield) => {
-      shield.body.setSize(50, 50);
-    });
-
-    Phaser.Actions.PlaceOnCircle(
-      this.shieldGroup.getChildren(),
-      shieldCircle
-    );
-
-
+    this.shieldGroup = shieldGroup
 
     //score
     this.scoreText = this.add

@@ -69,7 +69,6 @@ export default class EnemyHelper {
     }
 
     //iterate through all enemies, reduce bounding box size
-    
     for (const hunter of enemyGroup.getChildren()) {
       hunter.body.setSize(450, 450)
     }
@@ -94,6 +93,10 @@ export default class EnemyHelper {
     }
     this.moveInt += 1
     if (this.moveInt > 12) this.moveInt = 1
+  }
+
+  getRandomEnemy(enemies) {
+    return enemies[Math.floor(Math.random() * enemies.length)]
   }
 
   moveEnemies() {

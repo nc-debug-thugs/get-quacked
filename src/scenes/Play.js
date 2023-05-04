@@ -135,18 +135,7 @@ export default class Play extends Phaser.Scene {
 
   update() {
     this.enemyHelper.moveEnemies()
-
-    if (this.cursors.left.isDown) {
-      this.player.angle -= 2;
-    }
-
-    if (this.cursors.right.isDown) {
-      this.player.angle += 2;
-    }
-
-    if (this.cursors.space.isDown) {
-      this.player.shoot();
-    }
+    this.playerHelper.movePlayer()
 
     if (this.cursors.up.isDown) {
       Phaser.Actions.RotateAroundDistance(

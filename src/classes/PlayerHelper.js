@@ -5,7 +5,8 @@ import Shields from "./Shields";
 
 export default class PlayerHelper {
   constructor(scene) {
-    this.scene = scene
+    this.scene = scene;
+    this.cursors = scene.input.keyboard.createCursorKeys();
   }
 
   setupPlayer() {
@@ -14,10 +15,10 @@ export default class PlayerHelper {
       maxSize: 1,
       runChildUpdate: true,
     });
-    const player = new Player(this.scene, 400, 300, 'duck', bulletGroup)
-    const playerGroup = this.scene.physics.add.group(player)
-    player.body.setSize(450, 450)
-    this.scene.add.existing(player)
+    this.player = new Player(this.scene, 400, 300, 'duck', bulletGroup)
+    const playerGroup = this.scene.physics.add.group(this.player)
+    this.player.body.setSize(450, 450)
+    this.scene.add.existing(this.player)
 
     const shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
     const shieldGroup = this.scene.physics.add.group()
@@ -31,6 +32,20 @@ export default class PlayerHelper {
     Phaser.Actions.PlaceOnCircle(shields, shieldCircle)
     shieldGroup.addMultiple(shields)
 
-    return [player, playerGroup, bulletGroup, shieldGroup]
+    return [this.player, playerGroup, bulletGroup, shieldGroup]
+  }
+
+  movePlayer() {
+    if (this.cursors.left.isDown) {
+      this.player.angle -= 2;
+    }
+
+    if (this.cursors.right.isDown) {
+      this.player.angle += 2;
+    }
+
+    if (this.cursors.space.isDown) {
+      this.player.shoot();
+    }
   }
 }

@@ -25,18 +25,16 @@ export default class Play extends Phaser.Scene {
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this)
-    let [enemyGroup, bulletGroup] = this.enemyHelper.setupEnemies()
+    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies()
     this.hunters = enemyGroup
-    this.hunterBulletGroup = bulletGroup
+    this.hunterBulletGroup = hunterBulletGroup
+
     //player setup
-    this.playerBulletGroup = this.physics.add.group({
-      classType: PlayerBullet,
-      maxSize: 1,
-      runChildUpdate: true,
-    });
     this.playerHelper = new PlayerHelper(this)
-    this.playerGroup = this.physics.add.group();
-    this.player = this.playerHelper.setupPlayer(this.playerGroup, this.playerBulletGroup)
+    let [player, playerGroup, playerBulletGroup] = this.playerHelper.setupPlayer()
+    this.player = player
+    this.playerGroup = playerGroup
+    this.playerBulletGroup = playerBulletGroup
 
     //score
     this.scoreText = this.add

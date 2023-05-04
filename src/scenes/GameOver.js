@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { score } from "./Play";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
@@ -156,9 +157,9 @@ export class Highscore extends Phaser.Scene {
 
   create() {
     this.add
-      .bitmapText(100, 260, "arcade", "RANK  SCORE   NAME")
+      .bitmapText(100, 260, "arcade", "ROUND  SCORE   NAME")
       .setTint(0xff00ff);
-    this.add.bitmapText(100, 310, "arcade", "1ST   50000").setTint(0xff0000);
+    this.add.bitmapText(100, 310, "arcade", `ROUND ${score}`).setTint(0xff0000);
 
     this.playerText = this.add
       .bitmapText(580, 310, "arcade", "")

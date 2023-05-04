@@ -1,13 +1,11 @@
 import Phaser from "phaser";
 import Player from "../classes/Player";
-import HunterBullet from "../classes/HunterBullet"
-import PlayerBullet from "../classes/PlayerBullet"
+import HunterBullet from "../classes/HunterBullet";
+import PlayerBullet from "../classes/PlayerBullet";
 import Health from "../classes/Health";
 import Shields from "../classes/Shields";
-
-import EnemyHelper from "../classes/EnemyHelper"
-
-export let score = 0;
+import EnemyHelper from "../classes/EnemyHelper";
+import { score, round, updateScore } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -21,18 +19,24 @@ export default class Play extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-
     //enemy setup
-    this.enemyHelper = new EnemyHelper(this)
+    this.enemyHelper = new EnemyHelper(this);
     this.hunters = this.physics.add.group({
-      runChildUpdate: true
-    })
+      runChildUpdate: true,
+    });
     this.hunterBulletGroup = this.physics.add.group({
       classType: HunterBullet,
       maxSize: 30,
       runChildUpdate: true,
     });
-    this.enemyHelper.setupEnemies(this.hunters, this.hunterBulletGroup)
+    this.enemyHelper.setupEnemies(this.hunters, this.hunterBulletGroup);
+
+    //round
+    this.roundText = this.add
+      .text(600, 520, `Round ${round}`, {
+        fontSize: 24,
+      })
+      .setDepth(1);
 
     //score
     this.scoreText = this.add
@@ -87,15 +91,15 @@ export default class Play extends Phaser.Scene {
       onUpdate: function () {},
     });
 
-      // Random hunter selected to shoot at random time
-      this.time.addEvent({
-        delay: Phaser.Math.Between(1000, 2000),
-        loop: true,
-        callback: () => {
-          this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot()
-        },
-        callbackScope: this,
-      });
+    // Random hunter selected to shoot at random time
+    this.time.addEvent({
+      delay: Phaser.Math.Between(1000, 2000),
+      loop: true,
+      callback: () => {
+        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+      },
+      callbackScope: this,
+    });
 
     // player bullet and hunter interaction
     this.physics.add.overlap(
@@ -155,8 +159,8 @@ export default class Play extends Phaser.Scene {
   }
 
   handleEnemyHit(playerBullet, hunter) {
-    score += 100;
-    this.scoreText.setText(`Score: ${score}`);
+    const newScore = updateScore(100);
+    this.scoreText.setText(`Score: ${newScore}`);
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.isAlive = false;
@@ -168,9 +172,8 @@ export default class Play extends Phaser.Scene {
     shield.hit();
   }
 
-
   update() {
-    this.enemyHelper.moveEnemies()
+    this.enemyHelper.moveEnemies();
 
     if (this.cursors.left.isDown) {
       this.player.angle -= 2;

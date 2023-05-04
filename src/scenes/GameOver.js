@@ -25,6 +25,14 @@ export default class GameOver extends Phaser.Scene {
       })
       .setDepth(1)
       .setOrigin(0.5);
+
+    this.time.addEvent({
+      delay: 3000,
+      loop: false,
+      callback: () => {
+        this.scene.start("Highscore");
+      },
+    });
   }
 
   update() {}

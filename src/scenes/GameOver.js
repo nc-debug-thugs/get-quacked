@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { score } from "./Play";
+import { score } from "./PrePlay";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
@@ -13,6 +13,8 @@ export default class GameOver extends Phaser.Scene {
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY =
       this.cameras.main.worldView.y + this.cameras.main.height / 2;
+
+    console.log(score);
 
     this.gameOverText = this.add
       .text(screenCenterX, screenCenterY - 20, "GAME OVER", { fontSize: 48 })

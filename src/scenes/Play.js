@@ -4,8 +4,7 @@ import BaseBullet from "../classes/BaseBullet";
 import Hunter from "../classes/Hunter";
 import Health from "../classes/Health";
 import Shields from "../classes/Shields";
-
-export let score = 0;
+import { score, round, updateScore } from "./PrePlay";
 
 class PlayerBullet extends BaseBullet {
   constructor(scene) {
@@ -29,11 +28,13 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
+    console.log(`Starting round ${round} with score ${score}`);
+
     this.health = new Health(this, 3);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    //score
+    score;
     this.scoreText = this.add
       .text(600, 20, `Score: ${score}`, {
         fontSize: 24,
@@ -190,8 +191,10 @@ export default class Play extends Phaser.Scene {
   }
 
   handleEnemyHit(playerBullet, hunter) {
-    score += 100;
-    this.scoreText.setText(`Score: ${score}`);
+    // Increase score by 100 and store in PrePlay
+    const newScore = updateScore(100);
+    this.scoreText.setText(`Score: ${newScore}`);
+
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.isAlive = false;

@@ -35,7 +35,7 @@ export default class Play extends Phaser.Scene {
       .text(600, 520, `Round ${round}`, {
         fontSize: 24,
       })
-      .setDepth(1);
+      .setDepth(10);
 
     //score
     this.scoreText = this.add

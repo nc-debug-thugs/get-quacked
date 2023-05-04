@@ -161,11 +161,6 @@ export default class Play extends Phaser.Scene {
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.isAlive = false;
     hunter.destroy();
-    this.hunterShootTimers.forEach((timer) => {
-      if (timer.args[0] === hunter) {
-        timer.destroy();
-      }
-    });
   }
 
   handleShieldCollision(bullet, shield) {

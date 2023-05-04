@@ -35,7 +35,19 @@ export default class Play extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
+
+    //enemy setup
+    this.hunters = this.physics.add.group({
+      runChildUpdate: true
+    })
+    this.hunterBulletGroup = this.physics.add.group({
+      classType: HunterBullet,
+      maxSize: 5,
+      runChildUpdate: true,
+    });
+
     this.eh = new EnemyHelper(this)
+    this.eh.setupEnemies(this.hunters, this.hunterBulletGroup)
 
     //score
     this.scoreText = this.add
@@ -54,12 +66,6 @@ export default class Play extends Phaser.Scene {
     this.playerBulletGroup = this.physics.add.group({
       classType: PlayerBullet,
       maxSize: 1,
-      runChildUpdate: true,
-    });
-
-    this.hunterBulletGroup = this.physics.add.group({
-      classType: HunterBullet,
-      maxSize: 5,
       runChildUpdate: true,
     });
 

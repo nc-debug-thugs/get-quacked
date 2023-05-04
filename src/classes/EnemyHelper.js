@@ -15,7 +15,6 @@ export default class EnemyHelper {
 
     this.moveDelay = 2000 //Delay in ms between enemy moves
     this.moveFor = 500    //Time in ms enemies move for
-    this.shootDelay = 2000//Delay in ms between enemies shooting
 
     this.moving = false
     this.moveInt = 1
@@ -61,7 +60,7 @@ export default class EnemyHelper {
         const hunter = new Hunter(this.scene, 0, 0, bulletGroup)
         hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
         hunterSubarray.push(hunter)
-        Phaser.Actions.PlaceOnCircle(hunterSubarray, circle, 4, 6)
+        Phaser.Actions.PlaceOnCircle(hunterSubarray, circle, 4, 5)
       }
       enemyGroup.addMultiple(hunterSubarray)
       this.hunters.push(hunterSubarray)

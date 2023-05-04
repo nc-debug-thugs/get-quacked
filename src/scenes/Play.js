@@ -87,22 +87,15 @@ export default class Play extends Phaser.Scene {
       onUpdate: function () {},
     });
 
-    this.hunterShootTimers = [];
-
-    //   // Random hunter selected to shoot at random time
-    //   const timer = this.time.addEvent({
-    //     delay: Phaser.Math.Between(1000, 10000),
-    //     loop: true,
-    //     callback: () => {
-    //       if (hunter.isAlive) {
-    //         hunter.shoot(this.player, this.hunterBulletGroup);
-    //         timer.delay = Phaser.Math.Between(1000, 5000);
-    //       }
-    //     },
-    //     callbackScope: this,
-    //   });
-    //   this.hunterShootTimers.push(timer);
-    // });
+      // Random hunter selected to shoot at random time
+      this.time.addEvent({
+        delay: Phaser.Math.Between(1000, 2000),
+        loop: true,
+        callback: () => {
+          this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot()
+        },
+        callbackScope: this,
+      });
 
     // player bullet and hunter interaction
     this.physics.add.overlap(
@@ -113,14 +106,14 @@ export default class Play extends Phaser.Scene {
       this
     );
 
-    // // hunter bullet collide with player interaction
-    // this.physics.add.overlap(
-    //   this.playerGroup,
-    //   this.hunterBulletGroup,
-    //   this.handlePlayerHit,
-    //   null,
-    //   this
-    // );
+    // hunter bullet collide with player interaction
+    this.physics.add.overlap(
+      this.playerGroup,
+      this.hunterBulletGroup,
+      this.handlePlayerHit,
+      null,
+      this
+    );
 
     // explosion animation
     const explosion = {
@@ -149,20 +142,17 @@ export default class Play extends Phaser.Scene {
     );
   }
 
-  // handlePlayerHit(player, hunterBullet) {
-  //   hunterBullet.destroy();
+  handlePlayerHit(player, hunterBullet) {
+    hunterBullet.destroy();
 
-  //   if (this.health.decreaseHealth()) {
-  //     player.play("explode").setScale(1);
-  //     this.hunters.getChildren().forEach((hunter) => {
-  //       hunter.destroy();
-  //     });
-  //     this.hunterShootTimers.forEach((timer) => {
-  //       timer.remove(false);
-  //     });
-  //     this.time.delayedCall(2000, () => this.scene.start("gameover"));
-  //   }
-  // }
+    if (this.health.decreaseHealth()) {
+      player.play("explode").setScale(1);
+      this.hunters.getChildren().forEach((hunter) => {
+        hunter.destroy();
+      });
+      this.time.delayedCall(2000, () => this.scene.start("gameover"));
+    }
+  }
 
   handleEnemyHit(playerBullet, hunter) {
     score += 100;

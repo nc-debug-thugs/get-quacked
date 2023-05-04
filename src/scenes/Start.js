@@ -45,16 +45,30 @@ export default class Start extends Phaser.Scene {
       repeat: -1,
     });
 
-    let shootSign = this.add.image(145, 560, "shoot");
-
+    let shootSign = this.add.image(145, 570, "shoot");
     shootSign.setScale(3);
+
+    let arrowKeys = this.add.image(700, 550, "arrowkey");
+
+    arrowKeys.setScale(2.3);
+    this.tweens.add({
+      targets: arrowKeys,
+      y: arrowKeys.y + 10,
+      duration: 500,
+      ease: "Sine.easeInOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
+    let aimSign = this.add.image(700, 570, "aim");
+    aimSign.setScale(3);
 
     let startButton = this.add.image(
       this.cameras.main.width / 2,
       this.cameras.main.height / 4,
       "start"
     );
-    startButton.setScale(0.5);
+    startButton.setScale(0.4);
     startButton.setInteractive();
     startButton.on("pointerover", () => {
       this.tweens.add({

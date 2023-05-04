@@ -16,6 +16,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("spacebar", "../assets/images/spacebar.png");
     this.load.image("shoot", "../assets/images/shoot.png");
     this.load.image("arrowkey", "../assets/images/arrowkey.png");
+    this.load.image("aim", "../assets/images/aim.png");
 
     this.load.spritesheet("health", "../assets/images/health.png", {
       frameWidth: 59,

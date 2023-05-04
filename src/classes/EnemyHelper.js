@@ -20,28 +20,28 @@ export default class EnemyHelper {
     this.moveInt = 1
     this.movePattern = 'clockwise'
 
-    this.__startMoveEveryDelay()
+    this._startMoveEveryDelay()
   }
 
-  __startMoveEveryDelay() {
+  _startMoveEveryDelay() {
     this.scene.time.addEvent({
       delay: this.moveDelay,
       loop: false,
       callback: () => {
         this.moving = true
-        this.__startMoveForDelay()
+        this._startMoveForDelay()
       }
     })
   }
 
-  __startMoveForDelay() {
+  _startMoveForDelay() {
     this.scene.time.addEvent({
       delay: this.moveFor,
       loop: false,
       callback: () => {
         this.moving = false
-        this.__updateMovePattern()
-        this.__startMoveEveryDelay()
+        this._updateMovePattern()
+        this._startMoveEveryDelay()
       }
     })
   }
@@ -80,7 +80,7 @@ export default class EnemyHelper {
     })
   }
 
-  __updateMovePattern() {
+  _updateMovePattern() {
     if (this.moveInt < 6) {
       this.movePattern = 'clockwise'
     }

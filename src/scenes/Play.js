@@ -6,6 +6,7 @@ import Health from "../classes/Health";
 import Shields from "../classes/Shields";
 
 import EnemyHelper from "../classes/EnemyHelper"
+import PlayerHelper from "../classes/PlayerHelper"
 
 export let score = 0;
 
@@ -34,6 +35,16 @@ export default class Play extends Phaser.Scene {
     });
     this.enemyHelper.setupEnemies(this.hunters, this.hunterBulletGroup)
 
+    //player setup
+    this.playerBulletGroup = this.physics.add.group({
+      classType: PlayerBullet,
+      maxSize: 1,
+      runChildUpdate: true,
+    });
+    this.playerHelper = new PlayerHelper(this)
+    this.playerGroup = this.physics.add.group();
+    this.player = this.playerHelper.setupPlayer(this.playerGroup, this.playerBulletGroup)
+
     //score
     this.scoreText = this.add
       .text(600, 20, `Score: ${score}`, {
@@ -47,17 +58,6 @@ export default class Play extends Phaser.Scene {
       "background"
     );
     bgImage.setScale(1).setScrollFactor(0);
-
-    this.playerBulletGroup = this.physics.add.group({
-      classType: PlayerBullet,
-      maxSize: 1,
-      runChildUpdate: true,
-    });
-
-    this.player = new Player(this, 400, 300, "duck", this.playerBulletGroup);
-    this.playerGroup = this.physics.add.group(this.player);
-    this.player.body.setSize(450, 450);
-    this.add.existing(this.player);
 
     this.shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
 

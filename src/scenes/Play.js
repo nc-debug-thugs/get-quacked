@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 import Health from "../classes/Health";
-
 import EnemyHelper from "../classes/EnemyHelper"
 import PlayerHelper from "../classes/PlayerHelper"
 
@@ -14,10 +13,8 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
+    //health bar setup
     this.health = new Health(this, 3);
-
-    this.cursors = this.input.keyboard.createCursorKeys();
-
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this)
@@ -37,8 +34,9 @@ export default class Play extends Phaser.Scene {
       .text(600, 20, `Score: ${score}`, {
         fontSize: 24,
       })
-      .setDepth(1);
-
+      .setDepth(10);
+    
+    //background
     let bgImage = this.add.image(
       this.cameras.main.width / 2,
       this.cameras.main.height / 2,
@@ -46,15 +44,15 @@ export default class Play extends Phaser.Scene {
     );
     bgImage.setScale(1).setScrollFactor(0);
 
-      // Random hunter selected to shoot at random time
-      this.time.addEvent({
-        delay: Phaser.Math.Between(1000, 2000),
-        loop: true,
-        callback: () => {
-          this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot()
-        },
-        callbackScope: this,
-      });
+    // Random hunter selected to shoot at random time
+    this.time.addEvent({
+      delay: Phaser.Math.Between(1000, 2000),
+      loop: true,
+      callback: () => {
+        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot()
+      },
+      callbackScope: this,
+    });
 
     // player bullet and hunter interaction
     this.physics.add.overlap(

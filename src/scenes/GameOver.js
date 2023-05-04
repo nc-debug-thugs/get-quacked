@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { score } from "./Play";
+import { score } from "./PrePlay";
 
 export default class GameOver extends Phaser.Scene {
   constructor() {

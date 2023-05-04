@@ -46,7 +46,16 @@ export default class EnemyHelper {
     })
   }
 
-  setupEnemies(enemyGroup, bulletGroup) {
+  setupEnemies() {
+    const enemyGroup = this.scene.physics.add.group({
+      runChildUpdate: true
+    })
+    const bulletGroup = this.scene.physics.add.group({
+      classType: HunterBullet,
+      maxSize: 30,
+      runChildUpdate: true,
+    });
+
     //set up enemy circles
     for (let i = 0; i < 3; i++) {
       this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius + this.circleStepRadius * i))
@@ -78,6 +87,8 @@ export default class EnemyHelper {
       duration: 6000,
       radius: 0
     })
+
+    return [enemyGroup, bulletGroup]
   }
 
   _updateMovePattern() {

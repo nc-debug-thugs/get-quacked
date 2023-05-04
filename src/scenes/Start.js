@@ -15,12 +15,6 @@ export default class Start extends Phaser.Scene {
     );
     bgImage.setScale(1).setScrollFactor(0);
 
-    let spacebar = this.add.image(
-      this.cameras.main.width / 2,
-      this.cameras.main.height / 1.3,
-      "spacebar"
-    );
-
     let startButton = this.add.image(
       this.cameras.main.width / 2,
       this.cameras.main.height / 1.3,

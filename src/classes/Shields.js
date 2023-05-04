@@ -8,6 +8,6 @@ export default class Shields extends Phaser.GameObjects.Sprite {
   }
   hit() {
     this.hp -= 1;
-    console.log(this.hp);
+    // console.log(this.hp);
   }
 }

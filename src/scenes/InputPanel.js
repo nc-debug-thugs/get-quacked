@@ -167,7 +167,7 @@ export class InputPanel extends Phaser.Scene {
 
 export class Highscore extends Phaser.Scene {
   constructor() {
-    super({ key: "Highscore", active: true });
+    super({ key: "Highscore", active: false });
 
     this.playerText;
   }

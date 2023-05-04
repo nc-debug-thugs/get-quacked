@@ -1,27 +1,13 @@
 import Phaser from "phaser";
 import Player from "../classes/Player";
-import BaseBullet from "../classes/BaseBullet";
-import Hunter from "../classes/Hunter";
+import HunterBullet from "../classes/HunterBullet"
+import PlayerBullet from "../classes/PlayerBullet"
 import Health from "../classes/Health";
 import Shields from "../classes/Shields";
 
 import EnemyHelper from "../classes/EnemyHelper"
 
 export let score = 0;
-
-class PlayerBullet extends BaseBullet {
-  constructor(scene) {
-    super(scene, "bullet");
-    this.setScale(0.2);
-  }
-}
-
-class HunterBullet extends BaseBullet {
-  constructor(scene) {
-    super(scene, "hunter_bullet");
-    this.setScale(0.03);
-  }
-}
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -37,17 +23,16 @@ export default class Play extends Phaser.Scene {
 
 
     //enemy setup
+    this.enemyHelper = new EnemyHelper(this)
     this.hunters = this.physics.add.group({
       runChildUpdate: true
     })
     this.hunterBulletGroup = this.physics.add.group({
       classType: HunterBullet,
-      maxSize: 5,
+      maxSize: 30,
       runChildUpdate: true,
     });
-
-    this.eh = new EnemyHelper(this)
-    this.eh.setupEnemies(this.hunters, this.hunterBulletGroup)
+    this.enemyHelper.setupEnemies(this.hunters, this.hunterBulletGroup)
 
     //score
     this.scoreText = this.add
@@ -200,7 +185,7 @@ export default class Play extends Phaser.Scene {
 
 
   update() {
-    this.eh.moveEnemies()
+    this.enemyHelper.moveEnemies()
 
     if (this.cursors.left.isDown) {
       this.player.angle -= 2;

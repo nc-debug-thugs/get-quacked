@@ -36,7 +36,7 @@ export default class Play extends Phaser.Scene {
     });
 
     //enemy setup
-    this.enemyHelper = new EnemyHelper(this);
+    this.enemyHelper = new EnemyHelper(this, round.toString());
     let [hunterGroups, hunterBulletGroup] = this.enemyHelper.setupEnemies();
     this.hunters = hunterGroups;
     this.hunterBulletGroup = hunterBulletGroup;

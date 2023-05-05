@@ -12,36 +12,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.isVulnerable = true;
     this.canShoot = true;
 
-    scene.anims.create({
-      key: "player-invulnerable",
-      frames: this.anims.generateFrameNumbers("duck", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 24,
-      repeat: -1,
-    });
-
-    scene.anims.create({
-      key: "player-vulnerable",
-      frames: this.anims.generateFrameNumbers("duck", {
-        start: 0,
-        end: 0,
-      }),
-      frameRate: 24,
-      repeat: 0,
-    });
-
-    scene.anims.create({
-      key: "player-dies",
-      frames: this.anims.generateFrameNumbers("boom", {
-        start: 0,
-        end: 23,
-      }),
-      frameRate: 24,
-      repeat: 0,
-      hideOnComplete: true,
-    });
+    this.createAnimations()
   }
 
   shoot() {
@@ -85,5 +56,44 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   die() {
     this.play("player-dies", true);
+  }
+
+  createAnimations() {
+    if (!this.scene.anims.exists('player-invulnerable')) {
+      this.scene.anims.create({
+        key: "player-invulnerable",
+        frames: this.anims.generateFrameNumbers("duck", {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 24,
+        repeat: -1,
+      })
+    }
+
+    if (!this.scene.anims.exists('player-vulnerable')) {
+      this.scene.anims.create({
+        key: "player-vulnerable",
+        frames: this.anims.generateFrameNumbers("duck", {
+          start: 0,
+          end: 0,
+        }),
+        frameRate: 24,
+        repeat: 0,
+      });
+    }
+
+    if (!this.scene.anims.exists('player-dies')) {
+      this.scene.anims.create({
+        key: "player-dies",
+        frames: this.anims.generateFrameNumbers("boom", {
+          start: 0,
+          end: 23,
+        }),
+        frameRate: 24,
+        repeat: 0,
+        hideOnComplete: true,
+      });
+    }
   }
 }

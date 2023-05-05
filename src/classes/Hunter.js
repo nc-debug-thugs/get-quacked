@@ -8,36 +8,8 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     this.bulletGroup = bulletGroup;
 
+    this.createAnimations()
     scene.add.existing(this)
-
-    scene.anims.create({
-      key: 'hunter-idle',
-      frames: this.anims.generateFrameNumbers('hunter', {
-        start: 0,
-        end: 0
-      }),
-      repeat: 0
-    })
-
-    scene.anims.create({
-      key: 'hunter-walking-sideways',
-      frames: this.anims.generateFrameNumbers('hunter', {
-        start: 0,
-        end: 1
-      }),
-      frameRate: 4,
-      repeat: -1
-    })
-
-    scene.anims.create({
-      key: 'hunter-walking-inwards',
-      frames: this.anims.generateFrameNumbers('hunter', {
-        start: 0,
-        end: 1
-      }),
-      frameRate: 8,
-      repeat: -1
-    })
   }
 
   shoot() {
@@ -57,15 +29,47 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-   
-    // if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
-    //   this.play('hunter-idle', true)
-    // }
-
     this.setAngle(
       Phaser.Math.RadToDeg(
         Phaser.Math.Angle.Between(this.x, this.y, 400, 300)
       ) - 90
     )
+  }
+
+  createAnimations() {
+    if (!this.scene.anims.exists('hunter-idle')) {
+      this.scene.anims.create({
+        key: 'hunter-idle',
+        frames: this.anims.generateFrameNumbers('hunter', {
+          start: 0,
+          end: 0
+        }),
+        repeat: 0
+      })
+    }
+
+    if (!this.scene.anims.exists('hunter-walking-sideways')) {
+      this.scene.anims.create({
+        key: 'hunter-walking-sideways',
+        frames: this.anims.generateFrameNumbers('hunter', {
+          start: 0,
+          end: 1
+        }),
+        frameRate: 4,
+        repeat: -1
+      })
+    }
+
+    if (!this.scene.anims.exists('hunter-walking-inwards')) {
+      this.scene.anims.create({
+        key: 'hunter-walking-inwards',
+        frames: this.anims.generateFrameNumbers('hunter', {
+          start: 0,
+          end: 1
+        }),
+        frameRate: 8,
+        repeat: -1
+      })
+    }
   }
 }

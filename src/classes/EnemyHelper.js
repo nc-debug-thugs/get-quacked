@@ -3,9 +3,11 @@ import Hunter from '../classes/Hunter'
 import HunterBullet from './HunterBullet';
 
 export default class EnemyHelper {
-  constructor(scene) {
+  constructor(scene, round = 'attract') {
     this.scene = scene
     this.centerPoint = { x: scene.scale.gameSize.width / 2, y: scene.scale.gameSize.height / 2 };
+
+    this.round = round
 
     this.circleStartRadius = 320  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
@@ -47,6 +49,7 @@ export default class EnemyHelper {
   }
 
   setupEnemies() {
+    console.log(this.round)
     const bulletGroup = this.scene.physics.add.group({
       classType: HunterBullet,
       maxSize: 30,

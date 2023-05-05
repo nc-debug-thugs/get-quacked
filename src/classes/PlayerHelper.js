@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import Player from './Player'
+import Player from "./Player";
 import PlayerBullet from "./PlayerBullet";
 import Shields from "./Shields";
 
@@ -18,26 +18,26 @@ export default class PlayerHelper {
     });
 
     //player setup
-    this.player = new Player(this.scene, 400, 300, 'duck', bulletGroup)
-   
-    const playerGroup = this.scene.physics.add.group(this.player)
-    this.player.body.setSize(45, 45)
-    this.scene.add.existing(this.player)
-    
-    //Shields
-    const shieldGroup = this.scene.physics.add.group()
-    const shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
-    this.shields = []
-    for (let i = 0; i < 5; i++) {
-      const shield = new Shields(this.scene)
-      shield.setDepth(2)
-      this.scene.add.existing(shield)
-      this.shields.push(shield)
-    }
-    Phaser.Actions.PlaceOnCircle(this.shields, shieldCircle)
-    shieldGroup.addMultiple(this.shields)
+    this.player = new Player(this.scene, 400, 300, "duck", bulletGroup);
 
-    return [playerGroup, bulletGroup, shieldGroup]
+    const playerGroup = this.scene.physics.add.group(this.player);
+    this.player.body.setSize(45, 45);
+    this.scene.add.existing(this.player);
+
+    //Shields
+    const shieldGroup = this.scene.physics.add.group();
+    const shieldCircle = new Phaser.Geom.Circle(400, 300, 100);
+    this.shields = [];
+    for (let i = 0; i < 5; i++) {
+      const shield = new Shields(this.scene);
+      shield.setDepth(2);
+      this.scene.add.existing(shield);
+      this.shields.push(shield);
+    }
+    Phaser.Actions.PlaceOnCircle(this.shields, shieldCircle);
+    shieldGroup.addMultiple(this.shields);
+
+    return [playerGroup, bulletGroup, shieldGroup];
   }
 
   movePlayer() {
@@ -52,17 +52,19 @@ export default class PlayerHelper {
     if (this.cursors.space.isDown) {
       this.player.shoot();
     }
-    if (this.cursors.up.isDown) {
+
+    if (this.input.keyboard.checkDown(this.input.keyboard.addKey("A"))) {
       Phaser.Actions.RotateAroundDistance(
-        this.shields,
+        this.shieldGroup.getChildren(),
         { x: 400, y: 300 },
         -0.015,
         100
       );
     }
-    if (this.cursors.down.isDown) {
+
+    if (this.input.keyboard.checkDown(this.input.keyboard.addKey("D"))) {
       Phaser.Actions.RotateAroundDistance(
-        this.shields,
+        this.shieldGroup.getChildren(),
         { x: 400, y: 300 },
         +0.015,
         100

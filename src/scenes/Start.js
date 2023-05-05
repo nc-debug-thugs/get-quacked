@@ -78,6 +78,9 @@ export default class Start extends Phaser.Scene {
     startButton.on("pointerdown", () => {
       this.scene.start("preplay");
     });
+    this.input.keyboard.on("keydown-ENTER", () => {
+      this.scene.start("preplay");
+    });
 
     this.cursors = this.input.keyboard.createCursorKeys();
 

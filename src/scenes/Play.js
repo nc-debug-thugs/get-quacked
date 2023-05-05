@@ -136,6 +136,14 @@ export default class Play extends Phaser.Scene {
     this.enemyHelper.moveEnemies();
     this.playerHelper.movePlayer();
 
-    console.log(this.hunters.getChildren().length)
+    if (this.hunters.getChildren().length === 0) {
+      this.time.addEvent({
+        delay: 1000,
+        loop: false,
+        callback: () => {
+          this.scene.restart()
+        }
+      })
+    }
   }
 }

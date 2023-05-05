@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 
 import Health from "../classes/Health";
-import EnemyHelper from "../classes/EnemyHelper"
-import PlayerHelper from "../classes/PlayerHelper"
+import EnemyHelper from "../classes/EnemyHelper";
+import PlayerHelper from "../classes/PlayerHelper";
 
 import { score, round, updateScore } from "./PrePlay";
 
@@ -18,17 +18,18 @@ export default class Play extends Phaser.Scene {
     this.health = new Health(this, 3);
 
     //enemy setup
-    this.enemyHelper = new EnemyHelper(this)
-    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies()
-    this.hunters = enemyGroup
-    this.hunterBulletGroup = hunterBulletGroup
+    this.enemyHelper = new EnemyHelper(this);
+    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies();
+    this.hunters = enemyGroup;
+    this.hunterBulletGroup = hunterBulletGroup;
 
     //player setup
-    this.playerHelper = new PlayerHelper(this)
-    let [playerGroup, playerBulletGroup, shieldGroup] = this.playerHelper.setupPlayer()
-    this.playerGroup = playerGroup
-    this.playerBulletGroup = playerBulletGroup
-    this.shieldGroup = shieldGroup
+    this.playerHelper = new PlayerHelper(this);
+    let [playerGroup, playerBulletGroup, shieldGroup] =
+      this.playerHelper.setupPlayer();
+    this.playerGroup = playerGroup;
+    this.playerBulletGroup = playerBulletGroup;
+    this.shieldGroup = shieldGroup;
 
     //round
     this.roundText = this.add
@@ -43,7 +44,7 @@ export default class Play extends Phaser.Scene {
         fontSize: 24,
       })
       .setDepth(10);
-    
+
     //background
     let bgImage = this.add.image(
       this.cameras.main.width / 2,
@@ -110,11 +111,7 @@ export default class Play extends Phaser.Scene {
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
 
-    if (this.health.decreaseHealth()) {
-      player.play("explode").setScale(1);
-      this.hunters.getChildren().forEach((hunter) => {
-        hunter.destroy();
-      });
+    if (player.hit(this.health)) {
       this.time.delayedCall(2000, () => this.scene.start("gameover"));
     }
   }
@@ -134,7 +131,7 @@ export default class Play extends Phaser.Scene {
   }
 
   update() {
-    this.enemyHelper.moveEnemies()
-    this.playerHelper.movePlayer()
+    this.enemyHelper.moveEnemies();
+    this.playerHelper.movePlayer();
   }
 }

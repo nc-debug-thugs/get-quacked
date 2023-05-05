@@ -6,9 +6,36 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setActive(true);
     this.setVisible(true);
     this.setDepth(2);
-    this.setScale(0.06);
+    this.setScale(.7);
 
     this.bulletGroup = bulletGroup;
+    this.isVulnerable = true;
+
+    scene.anims.create({
+      key: 'player-invulnerable',
+      frames: this.anims.generateFrameNumbers('duck', {
+        start: 0,
+        end: 1
+      }),
+      frameRate: 24,
+      repeat: -1
+    })
+
+    scene.anims.create({
+      key: 'player-vulnerable',
+      frames: this.anims.generateFrameNumbers('duck', {
+        start: 0,
+        end: 0
+      }),
+      frameRate: 24,
+      repeat: 0
+    })
+
+    scene.anims.create({
+      key: 'player-dies',
+      frames: 'boom',
+      hideOnComplete: true
+    })
   }
 
   shoot() {
@@ -18,5 +45,25 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
-  handleCollision() {}
+  hit(health) {
+    if (this.isVulnerable) {
+      this.isVulnerable = false;
+      this.play('player-invulnerable')
+      this.scene.time.addEvent({
+        delay: 2000,
+        loop: false,
+        callback: () => {
+          if (this) {
+            this.isVulnerable = true;
+            this.play('player-vulnerable')
+          }
+        },
+      });
+      const isDead = health.decreaseHealth();
+      if (isDead) {
+        this.play('player-dies')
+      }
+      return isDead
+    }
+  }
 }

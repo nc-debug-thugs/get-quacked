@@ -120,7 +120,7 @@ export default class Play extends Phaser.Scene {
       this.shieldGroup,
       (hunter, shield) => {
         this.health.setToZero()
-        this.playerHelper.killPlayer()
+        this.playerHelper.player.die()
         this.isActive = false
         this.time.delayedCall(2000, () => this.scene.start("gameover"))
       },
@@ -133,6 +133,7 @@ export default class Play extends Phaser.Scene {
     hunterBullet.destroy();
 
     if (player.hit(this.health)) {
+      this.isActive = false
       this.time.delayedCall(2000, () => this.scene.start("gameover"));
     }
   }

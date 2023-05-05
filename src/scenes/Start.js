@@ -17,7 +17,22 @@ export default class Start extends Phaser.Scene {
     );
     bgImage.setScale(1).setScrollFactor(0);
 
-    let shootSpaceBar = this.add.image(125, 550, "spacebar");
+    let shieldSign = this.add.image(165, 575, "shield");
+    shieldSign.setScale(3);
+
+    let shieldKeys = this.add.image(170, 550, "moveshield");
+
+    shieldKeys.setScale(2.3);
+    this.tweens.add({
+      targets: shieldKeys,
+      y: shieldKeys.y + 10,
+      duration: 500,
+      ease: "Sine.easeInOut",
+      yoyo: true,
+      repeat: -1,
+    });
+
+    let shootSpaceBar = this.add.image(400, 550, "spacebar");
 
     shootSpaceBar.setScale(3);
     this.tweens.add({
@@ -29,7 +44,7 @@ export default class Start extends Phaser.Scene {
       repeat: -1,
     });
 
-    let shootSign = this.add.image(145, 570, "shoot");
+    let shootSign = this.add.image(425, 570, "shoot");
     shootSign.setScale(3);
 
     let arrowKeys = this.add.image(700, 550, "arrowkey");

@@ -25,6 +25,8 @@ export default class Boot extends Phaser.Scene {
     this.load.image("shoot", "../assets/images/shoot.png");
     this.load.image("arrowkey", "../assets/images/arrowkey.png");
     this.load.image("aim", "../assets/images/aim.png");
+    this.load.image("moveshield", "../assets/images/moveshield.png");
+    this.load.image("shield", "../assets/images/shield.png");
     this.load.audio("quacksound", "../assets/images/quack.wav");
     this.load.audio("explosionsound", "../assets/images/explosion.wav");
     this.load.audio("oof", "../assets/images/oof.wav");

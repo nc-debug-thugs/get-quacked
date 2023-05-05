@@ -17,7 +17,7 @@ export default class PlayerHelper {
     });
     this.player = new Player(this.scene, 400, 300, 'duck', bulletGroup)
     const playerGroup = this.scene.physics.add.group(this.player)
-    this.player.body.setSize(450, 450)
+    this.player.body.setSize(45, 45)
     this.scene.add.existing(this.player)
 
     const shieldCircle = new Phaser.Geom.Circle(400, 300, 100);

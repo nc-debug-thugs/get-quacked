@@ -3,9 +3,11 @@ import Hunter from '../classes/Hunter'
 import HunterBullet from './HunterBullet';
 
 export default class EnemyHelper {
-  constructor(scene) {
+  constructor(scene, round = 0) {
     this.scene = scene
     this.centerPoint = { x: scene.scale.gameSize.width / 2, y: scene.scale.gameSize.height / 2 };
+
+    this.round = round
 
     this.circleStartRadius = 320  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
@@ -13,8 +15,9 @@ export default class EnemyHelper {
     this.circles = []
     this.hunterGroups = []
 
-    this.moveDelay = 2000 //Delay in ms between enemy moves
-    this.moveFor = 500    //Time in ms enemies move for
+    this.moveDelay = 2400 - round * 200 //Delay in ms between enemy moves
+    this.moveFor = 500                  //Time in ms enemies move for
+    this.bulletSpeed = 120 + round * 20 //speed of enemy bullets
 
     this.moving = false
     this.moveInt = 1
@@ -65,7 +68,7 @@ export default class EnemyHelper {
         runChildUpdate: true
       })
       for(let i = 0; i < 5; i++) {
-        const hunter = new Hunter(this.scene, 0, 0, bulletGroup)
+        const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed)
         enemySubGroup.add(hunter)
         hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
         hunter.body.setSize(45, 45)

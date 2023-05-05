@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { score } from "./PrePlay";
+import { highScores } from "../data/test-scores";
 
 export class InputPanel extends Phaser.Scene {
   constructor() {
@@ -155,12 +156,10 @@ export class InputPanel extends Phaser.Scene {
     } else if (x === 8 && y === 2 && nameLength > 0) {
       //  Rub
       this.name = this.name.substr(0, nameLength - 1);
-
       this.events.emit("updateName", this.name);
     } else if (this.name.length < this.charLimit) {
       //  Add
       this.name = this.name.concat(this.chars[y][x]);
-
       this.events.emit("updateName", this.name);
     }
   }
@@ -201,7 +200,6 @@ export class Highscore extends Phaser.Scene {
     this.scene.launch("InputPanel");
 
     let panel = this.scene.get("InputPanel");
-    console.log(panel);
 
     //  Listen to events from the Input Panel scene
     panel.events.on("updateName", this.updateName, this);
@@ -212,16 +210,36 @@ export class Highscore extends Phaser.Scene {
     this.scene.stop("InputPanel");
 
     this.add
-      .bitmapText(100, 360, "arcade", "???   00000    ???")
+      .bitmapText(
+        100,
+        360,
+        "arcade",
+        `1ST   ${highScores.place1.score}    ${highScores.place1.initials}`
+      )
       .setTint(0xff8200);
     this.add
-      .bitmapText(100, 410, "arcade", "???   00000    ???")
+      .bitmapText(
+        100,
+        410,
+        "arcade",
+        `2ND   ${highScores.place2.score}    ${highScores.place2.initials}`
+      )
       .setTint(0xffff00);
     this.add
-      .bitmapText(100, 460, "arcade", "???   00000    ???")
+      .bitmapText(
+        100,
+        460,
+        "arcade",
+        `3RD   ${highScores.place3.score}    ${highScores.place3.initials}`
+      )
       .setTint(0x00ff00);
     this.add
-      .bitmapText(100, 510, "arcade", "???   00000    ???")
+      .bitmapText(
+        100,
+        510,
+        "arcade",
+        `4TH   ${highScores.place4.score}    ${highScores.place4.initials}`
+      )
       .setTint(0x00bfff);
   }
 

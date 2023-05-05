@@ -68,7 +68,7 @@ export default class EnemyHelper {
         runChildUpdate: true
       })
       for(let i = 0; i < 5; i++) {
-        const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed)
+        const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed, this.centerPoint)
         enemySubGroup.add(hunter)
         hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
         hunter.body.setSize(45, 45)

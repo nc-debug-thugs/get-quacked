@@ -9,6 +9,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setScale(0.06);
 
     this.bulletGroup = bulletGroup;
+    this.isVulnerable = true;
   }
 
   shoot() {
@@ -18,5 +19,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
   }
 
-  handleCollision() {}
+  hit(health) {
+    if (this.isVulnerable) {
+      this.isVulnerable = false;
+      this.scene.time.addEvent({
+        delay: 3000,
+        loop: false,
+        callback: () => {
+          this.isVulnerable = true;
+        },
+      });
+      return health.decreaseHealth();
+    }
+  }
 }

@@ -112,9 +112,6 @@ export default class Play extends Phaser.Scene {
     hunterBullet.destroy();
 
     if (player.hit(this.health)) {
-      this.hunters.getChildren().forEach((hunter) => {
-        hunter.destroy();
-      });
       this.time.delayedCall(2000, () => this.scene.start("gameover"));
     }
   }

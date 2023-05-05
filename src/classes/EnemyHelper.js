@@ -59,23 +59,18 @@ export default class EnemyHelper {
     
     let roundType = this.round
     while (roundType > 3) { roundType -= 3 }
-    console.log(roundType)
     switch (roundType) {
       case 0:
         this._oneTightGroup(bulletGroup)
-        console.log('0')
         break;
       case 1:
         this._oneTightGroup(bulletGroup)
-        console.log('1')
         break;
       case 2:
         this._twoEquidistantGroups(bulletGroup)
-        console.log('2')
         break;
       case 3:
         this._threeEquidistantGroups(bulletGroup)
-        console.log('3')
         break;
       default:
         console.log('something went wrong!')

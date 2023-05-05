@@ -10,19 +10,19 @@ export default class PlayerHelper {
   }
 
   setupPlayer() {
-    //player setup
-    this.player = new Player(this.scene, 400, 300, 'duck', bulletGroup)
-   
-    const playerGroup = this.scene.physics.add.group(this.player)
-    this.player.body.setSize(45, 45)
-    this.scene.add.existing(this.player)
-    
     //bulletGroup
     const bulletGroup = this.scene.physics.add.group({
       classType: PlayerBullet,
       maxSize: 1,
       runChildUpdate: true,
     });
+
+    //player setup
+    this.player = new Player(this.scene, 400, 300, 'duck', bulletGroup)
+   
+    const playerGroup = this.scene.physics.add.group(this.player)
+    this.player.body.setSize(45, 45)
+    this.scene.add.existing(this.player)
     
     //Shields
     const shieldGroup = this.scene.physics.add.group()

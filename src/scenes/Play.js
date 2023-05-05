@@ -58,7 +58,9 @@ export default class Play extends Phaser.Scene {
       delay: Phaser.Math.Between(1000, 2000),
       loop: true,
       callback: () => {
-        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+        if (this.hunters.getChildren().length > 0) {
+          this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+        }
       },
       callbackScope: this,
     });
@@ -133,5 +135,7 @@ export default class Play extends Phaser.Scene {
   update() {
     this.enemyHelper.moveEnemies();
     this.playerHelper.movePlayer();
+
+    console.log(this.hunters.getChildren().length)
   }
 }

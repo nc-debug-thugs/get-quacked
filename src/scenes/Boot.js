@@ -27,6 +27,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("aim", "../assets/images/aim.png");
     this.load.audio("quacksound", "../assets/images/quack.wav");
     this.load.audio("explosionsound", "../assets/images/explosion.wav");
+    this.load.audio("oof", "../assets/images/oof.wav");
 
     this.load.spritesheet("health", "../assets/images/health.png", {
       frameWidth: 59,

@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import { score } from "./PrePlay";
 import { highScores } from "../data/test-scores";
 
+let initials = "";
+
 export class InputPanel extends Phaser.Scene {
   constructor() {
     super({ key: "InputPanel", active: false });
@@ -17,7 +19,7 @@ export class InputPanel extends Phaser.Scene {
     this.text;
     this.block;
 
-    this.name = "";
+    this.initials = "";
     this.charLimit = 3;
   }
 
@@ -145,22 +147,22 @@ export class InputPanel extends Phaser.Scene {
   pressKey() {
     let x = this.cursor.x;
     let y = this.cursor.y;
-    let nameLength = this.name.length;
+    let nameLength = this.initials.length;
 
     this.block.x = this.text.x - 10 + x * 52;
     this.block.y = this.text.y - 2 + y * 64;
 
     if (x === 9 && y === 2 && nameLength > 0) {
       //  Submit
-      this.events.emit("submitName", this.name);
+      this.events.emit("submitName", this.initials);
     } else if (x === 8 && y === 2 && nameLength > 0) {
       //  Rub
-      this.name = this.name.substr(0, nameLength - 1);
-      this.events.emit("updateName", this.name);
-    } else if (this.name.length < this.charLimit) {
+      this.initials = this.initials.substr(0, nameLength - 1);
+      this.events.emit("updateName", this.initials);
+    } else if (this.initials.length < this.charLimit) {
       //  Add
-      this.name = this.name.concat(this.chars[y][x]);
-      this.events.emit("updateName", this.name);
+      this.initials = this.initials.concat(this.chars[y][x]);
+      this.events.emit("updateName", this.initials);
     }
   }
 }
@@ -238,7 +240,7 @@ export class Highscore extends Phaser.Scene {
         100,
         510,
         "arcade",
-        `4TH   ${highScores.place4.score}    ${highScores.place4.initials}`
+        `4TH   ${highScores.place3.score}    ${highScores.place3.initials}`
       )
       .setTint(0x00bfff);
   }

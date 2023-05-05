@@ -13,8 +13,8 @@ export function incrementRound() {
   round += 1
 }
 
-export function decrementHealth() {
-  currentHealth -= 1
+export function setHealth(newHealth) {
+  currentHealth = newHealth
 }
 
 export default class PrePlay extends Phaser.Scene {

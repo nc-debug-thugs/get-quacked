@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { currentHealth, decrementHealth } from '../scenes/PrePlay'
+import { currentHealth, setHealth } from '../scenes/PrePlay'
 
 export default class Health {
   constructor(scene) {
@@ -15,10 +15,10 @@ export default class Health {
           .setScale(0.6)
       );
     }
-    this.updateHealth()
+    this._updateHealth()
   }
 
-  updateHealth() {
+  _updateHealth() {
     for (const sprite of this.healthSprites) {
       for (let i = 0; i < this.maxHealth; i++) {
         if (i < currentHealth) {
@@ -30,11 +30,16 @@ export default class Health {
   }
 
   decreaseHealth() {
-    decrementHealth()
-    this.updateHealth()
+    setHealth(currentHealth - 1)
+    this._updateHealth()
     if (currentHealth === 0) {
       return true;
     }
     return false;
+  }
+
+  setToZero() {
+    setHealth(0)
+    this._updateHealth()
   }
 }

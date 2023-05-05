@@ -72,9 +72,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
       });
       const isDead = health.decreaseHealth();
       if (isDead) {
-        this.play('player-dies')
+        this.die()
       }
       return isDead
     }
+  }
+
+  die() {
+    this.play('player-dies')
   }
 }

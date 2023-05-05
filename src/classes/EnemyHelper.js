@@ -13,7 +13,7 @@ export default class EnemyHelper {
     this.circles = []
     this.hunters = []
 
-    this.moveDelay = 2000 //Delay in ms between enemy moves
+    this.moveDelay = 50 //Delay in ms between enemy moves
     this.moveFor = 500    //Time in ms enemies move for
 
     this.moving = false
@@ -93,10 +93,10 @@ export default class EnemyHelper {
 
   _updateMovePattern() {
     if (this.moveInt < 6) {
-      this.movePattern = 'clockwise'
+      this.movePattern = 'inward'
     }
     if (this.moveInt > 6) {
-      this.movePattern = 'anti-clockwise'
+      this.movePattern = 'inward'
     }
     if (this.moveInt % 6 === 0) {
       this.movePattern = 'inward'

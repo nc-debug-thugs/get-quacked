@@ -8,10 +8,19 @@ export default class Boot extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("duck", "../assets/images/duck.png");
+    this.load.spritesheet("duck", "../assets/images/duck.png", {
+      frameWidth: 128,
+      frameHeight: 125,
+      endFrame: 1,
+    });
     this.load.image("bullet", "../assets/images/egg.png");
     this.load.image("hunter", "../assets/images/hunter.png");
     this.load.image("background", "../assets/images/background.png");
+    this.load.image("start", "../assets/images/start.png");
+    this.load.image("spacebar", "../assets/images/spacebar.png");
+    this.load.image("shoot", "../assets/images/shoot.png");
+    this.load.image("arrowkey", "../assets/images/arrowkey.png");
+    this.load.image("aim", "../assets/images/aim.png");
 
     this.load.spritesheet("health", "../assets/images/health.png", {
       frameWidth: 59,
@@ -25,12 +34,11 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
       endFrame: 23,
     });
-
     this.load.audio("quack", "../assets/images/quack.wav");
     this.load.audio("explosion", "../assets/images/explosion.wav");
 
     this.load.on("complete", () => {
-      this.scene.start("play");
+      this.scene.start("start");
     });
   }
 }

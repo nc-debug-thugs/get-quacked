@@ -7,6 +7,7 @@ export default class PlayerHelper {
   constructor(scene) {
     this.scene = scene;
     this.cursors = scene.input.keyboard.createCursorKeys();
+    this.keyboard = scene.input.keyboard;
   }
 
   setupPlayer() {
@@ -52,19 +53,17 @@ export default class PlayerHelper {
     if (this.cursors.space.isDown) {
       this.player.shoot();
     }
-
-    if (this.input.keyboard.checkDown(this.input.keyboard.addKey("A"))) {
+    if (this.keyboard.checkDown(this.keyboard.addKey("A"))) {
       Phaser.Actions.RotateAroundDistance(
-        this.shieldGroup.getChildren(),
+        this.shields,
         { x: 400, y: 300 },
         -0.015,
         100
       );
     }
-
-    if (this.input.keyboard.checkDown(this.input.keyboard.addKey("D"))) {
+    if (this.keyboard.checkDown(this.keyboard.addKey("D"))) {
       Phaser.Actions.RotateAroundDistance(
-        this.shieldGroup.getChildren(),
+        this.shields,
         { x: 400, y: 300 },
         +0.015,
         100

@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 
 import Health from "../classes/Health";
-import EnemyHelper from "../classes/EnemyHelper"
-import PlayerHelper from "../classes/PlayerHelper"
+import EnemyHelper from "../classes/EnemyHelper";
+import PlayerHelper from "../classes/PlayerHelper";
 
 import { score, round, updateScore } from "./PrePlay";
 
@@ -17,18 +17,29 @@ export default class Play extends Phaser.Scene {
     //health bar setup
     this.health = new Health(this, 3);
 
+    //quack audio
+    this.quack = this.sound.add("quack", {
+      volume: 0.2,
+    });
+
+    //explosion audio
+    this.explosion = this.sound.add("explosion", {
+      volume: 0.3,
+    });
+
     //enemy setup
-    this.enemyHelper = new EnemyHelper(this)
-    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies()
-    this.hunters = enemyGroup
-    this.hunterBulletGroup = hunterBulletGroup
+    this.enemyHelper = new EnemyHelper(this);
+    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies();
+    this.hunters = enemyGroup;
+    this.hunterBulletGroup = hunterBulletGroup;
 
     //player setup
-    this.playerHelper = new PlayerHelper(this)
-    let [playerGroup, playerBulletGroup, shieldGroup] = this.playerHelper.setupPlayer()
-    this.playerGroup = playerGroup
-    this.playerBulletGroup = playerBulletGroup
-    this.shieldGroup = shieldGroup
+    this.playerHelper = new PlayerHelper(this);
+    let [playerGroup, playerBulletGroup, shieldGroup] =
+      this.playerHelper.setupPlayer();
+    this.playerGroup = playerGroup;
+    this.playerBulletGroup = playerBulletGroup;
+    this.shieldGroup = shieldGroup;
 
     //round
     this.roundText = this.add
@@ -43,7 +54,7 @@ export default class Play extends Phaser.Scene {
         fontSize: 24,
       })
       .setDepth(10);
-    
+
     //background
     let bgImage = this.add.image(
       this.cameras.main.width / 2,
@@ -111,6 +122,7 @@ export default class Play extends Phaser.Scene {
     hunterBullet.destroy();
 
     if (this.health.decreaseHealth()) {
+      this.explosion.play();
       player.play("explode").setScale(1);
       this.hunters.getChildren().forEach((hunter) => {
         hunter.destroy();
@@ -122,6 +134,7 @@ export default class Play extends Phaser.Scene {
   handleEnemyHit(playerBullet, hunter) {
     const newScore = updateScore(100);
     this.scoreText.setText(`Score: ${newScore}`);
+    this.quack.play();
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.isAlive = false;
@@ -134,7 +147,7 @@ export default class Play extends Phaser.Scene {
   }
 
   update() {
-    this.enemyHelper.moveEnemies()
-    this.playerHelper.movePlayer()
+    this.enemyHelper.moveEnemies();
+    this.playerHelper.movePlayer();
   }
 }

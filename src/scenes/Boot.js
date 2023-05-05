@@ -26,6 +26,9 @@ export default class Boot extends Phaser.Scene {
       endFrame: 23,
     });
 
+    this.load.audio("quack", "../assets/images/quack.wav");
+    this.load.audio("explosion", "../assets/images/explosion.wav");
+
     this.load.on("complete", () => {
       this.scene.start("play");
     });

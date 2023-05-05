@@ -11,7 +11,7 @@ export default class Health {
       this.healthSprites.push(
         scene.add
           .sprite(30 * i, 30, "health", 0)
-          .setDepth(1)
+          .setDepth(10)
           .setScale(0.6)
       );
     }

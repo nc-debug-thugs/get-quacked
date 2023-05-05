@@ -1,10 +1,11 @@
 import Phaser from 'phaser'
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, bulletGroup, bulletSpeed) {
+  constructor(scene, x, y, bulletGroup, bulletSpeed, centerPoint) {
     super(scene, x, y, "hunter");
     this.setScale(1);
     this.setDepth(2)
+    this.centerPoint = centerPoint
 
     this.bulletGroup = bulletGroup;
     this.bulletSpeed = bulletSpeed;
@@ -16,11 +17,13 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   shoot() {
     let bullet = this.bulletGroup.get();
     if (bullet) {
+      const deviateX = Phaser.Math.FloatBetween(0.90, 1.1)
+      const deviateY = Phaser.Math.FloatBetween(0.90, 1.1)
       bullet.fire(
         this.x,
         this.y,
         Phaser.Math.RadToDeg(
-          Phaser.Math.Angle.Between(this.x, this.y, 400, 300)
+          Phaser.Math.Angle.Between(this.x, this.y, this.centerPoint.x * deviateX, this.centerPoint.y * deviateY)
         ),
         0,
         10,
@@ -32,7 +35,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   update() {
     this.setAngle(
       Phaser.Math.RadToDeg(
-        Phaser.Math.Angle.Between(this.x, this.y, 400, 300)
+        Phaser.Math.Angle.Between(this.x, this.y, this.centerPoint.x, this.centerPoint.y)
       ) - 90
     )
   }

@@ -50,34 +50,38 @@ export default class EnemyHelper {
   }
 
   setupEnemies() {
+    //set up bulletGroup
     const bulletGroup = this.scene.physics.add.group({
       classType: HunterBullet,
       maxSize: 30,
       runChildUpdate: true,
     });
-
-    //set up enemy circles
-    for (let i = 0; i < 3; i++) {
-      this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius + this.circleStepRadius * i))
+    
+    let roundType = this.round
+    while (roundType > 3) { roundType -= 3 }
+    console.log(roundType)
+    switch (roundType) {
+      case 0:
+        this._oneTightGroup(bulletGroup)
+        console.log('0')
+        break;
+      case 1:
+        this._oneTightGroup(bulletGroup)
+        console.log('1')
+        break;
+      case 2:
+        this._twoEquidistantGroups(bulletGroup)
+        console.log('2')
+        break;
+      case 3:
+        this._threeEquidistantGroups(bulletGroup)
+        console.log('3')
+        break;
+      default:
+        console.log('something went wrong!')
+        break;
     }
-
-    //place hunters on circles and add them to the enemies group
-    let depth = 4 //depth of first row
-    for (const circle of this.circles) {
-      const enemySubGroup = this.scene.physics.add.group({
-        runChildUpdate: true
-      })
-      for(let i = 0; i < 5; i++) {
-        const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed, this.centerPoint)
-        enemySubGroup.add(hunter)
-        hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
-        hunter.body.setSize(45, 45)
-        Phaser.Actions.PlaceOnCircle(enemySubGroup.getChildren(), circle, 4, 5)
-      }
-      this.hunterGroups.push(enemySubGroup)
-      depth -= 1
-    }
-
+    
     //set up tween for inwards movement
     this.tween = this.scene.tweens.add({
       targets: this.circles,
@@ -87,6 +91,84 @@ export default class EnemyHelper {
 
     return [this.hunterGroups, bulletGroup]
   }
+
+  _oneTightGroup(bulletGroup) {
+     //set up enemy circles
+     for (let i = 0; i < 2; i++) {
+      this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius + this.circleStepRadius * i))
+    }
+
+    //place hunters on circles and add them to the enemies group
+    let depth = 4 //depth of first row
+    for (const circle of this.circles) {
+      const enemySubGroup = this.scene.physics.add.group({
+        runChildUpdate: true
+      })
+      for(let i = 0; i < 6; i++) {
+        const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed, this.centerPoint)
+        enemySubGroup.add(hunter)
+        hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
+        hunter.body.setSize(45, 45)
+        Phaser.Actions.PlaceOnCircle(enemySubGroup.getChildren(), circle, 4, 5.5)
+      }
+      this.hunterGroups.push(enemySubGroup)
+      depth -= 1
+    }
+  }
+
+  _twoEquidistantGroups(bulletGroup) {
+    //set up enemy circles
+    for (let i = 0; i < 2; i++) {
+     this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius))
+   }
+
+   //place hunters on circles and add them to the enemies group
+   let depth = 4 //depth of first row
+   let c = 0
+   for (const circle of this.circles) {
+     const enemySubGroup = this.scene.physics.add.group({
+       runChildUpdate: true
+     })
+     for(let i = 0; i < 6; i++) {
+       const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed, this.centerPoint)
+       enemySubGroup.add(hunter)
+       hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
+       hunter.body.setSize(45, 45)
+       Phaser.Actions.PlaceOnCircle(enemySubGroup.getChildren(), circle, 4 + c, 2 + c)
+     }
+     this.hunterGroups.push(enemySubGroup)
+     depth -= 1
+     c += 3
+   }
+ }
+
+ _threeEquidistantGroups(bulletGroup) {
+      //set up enemy circles
+      for (let i = 0; i < 3; i++) {
+        this.circles.push(new Phaser.Geom.Circle(this.centerPoint.x, this.centerPoint.y, this.circleStartRadius))
+      }
+   
+      //place hunters on circles and add them to the enemies group
+      let depth = 4 //depth of first row
+      let c = 0
+      for (const circle of this.circles) {
+        const enemySubGroup = this.scene.physics.add.group({
+          runChildUpdate: true
+        })
+        for(let i = 0; i < 4; i++) {
+          const hunter = new Hunter(this.scene, 0, 0, bulletGroup, this.bulletSpeed, this.centerPoint)
+          enemySubGroup.add(hunter)
+          hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
+          hunter.body.setSize(45, 45)
+          Phaser.Actions.PlaceOnCircle(enemySubGroup.getChildren(), circle, 0 + c, 1 + c)
+        }
+        this.hunterGroups.push(enemySubGroup)
+        depth -= 1
+        c += 2
+      }
+  }
+
+
 
   _updateMovePattern() {
     if (this.moveInt < 6) {

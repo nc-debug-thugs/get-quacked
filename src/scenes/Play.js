@@ -4,7 +4,7 @@ import Health from "../classes/Health";
 import EnemyHelper from "../classes/EnemyHelper";
 import PlayerHelper from "../classes/PlayerHelper";
 
-import { score, round, updateScore, incrementRound, currentHealth } from "./PrePlay";
+import { score, round, updateScore, incrementRound } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -14,6 +14,9 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
+    //is scene active
+    this.isActive = true
+
     //health bar setup
     this.health = new Health(this);
 
@@ -58,8 +61,10 @@ export default class Play extends Phaser.Scene {
       delay: Phaser.Math.Between(1000, 2000),
       loop: true,
       callback: () => {
-        if (this.hunters.getChildren().length > 0) {
-          this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+        if (this.isActive) {
+          if (this.hunters.getChildren().length > 0) {
+            this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+          }
         }
       },
       callbackScope: this,
@@ -108,12 +113,27 @@ export default class Play extends Phaser.Scene {
       null,
       this
     );
+
+    //hunter and shield interaction
+    this.physics.add.overlap(
+      this.hunters,
+      this.shieldGroup,
+      (hunter, shield) => {
+        this.health.setToZero()
+        this.playerHelper.player.die()
+        this.isActive = false
+        this.time.delayedCall(2000, () => this.scene.start("gameover"))
+      },
+      null,
+      this
+    )
   }
 
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
 
     if (player.hit(this.health)) {
+      this.isActive = false
       this.time.delayedCall(2000, () => this.scene.start("gameover"));
     }
   }
@@ -133,8 +153,10 @@ export default class Play extends Phaser.Scene {
   }
 
   update() {
-    this.enemyHelper.moveEnemies();
-    this.playerHelper.movePlayer();
+    if (this.isActive) {
+      this.enemyHelper.moveEnemies();
+      this.playerHelper.movePlayer();
+    }
 
     if (this.hunters.getChildren().length === 0) {
       this.time.addEvent({

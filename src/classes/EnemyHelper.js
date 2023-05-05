@@ -7,7 +7,7 @@ export default class EnemyHelper {
     this.scene = scene
     this.centerPoint = { x: scene.scale.gameSize.width / 2, y: scene.scale.gameSize.height / 2 };
 
-    this.circleStartRadius = 300  //radius of inner enemy circle
+    this.circleStartRadius = 320  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
 
     this.circles = []
@@ -18,7 +18,7 @@ export default class EnemyHelper {
 
     this.moving = false
     this.moveInt = 1
-    this.movePattern = 'clockwise'
+    this.movePattern = 'inward'
 
     this._startMoveEveryDelay()
   }
@@ -78,7 +78,7 @@ export default class EnemyHelper {
 
     //iterate through all enemies, reduce bounding box size
     for (const hunter of enemyGroup.getChildren()) {
-      hunter.body.setSize(450, 450)
+      hunter.body.setSize(45, 45)
     }
 
     //set up tween for inwards movement
@@ -111,21 +111,31 @@ export default class EnemyHelper {
 
   moveEnemies() {
     this.tween.pause()
+    if (!this.moving) {
+      for (const hunterSubarray of this.hunters) {
+        for (const hunter of hunterSubarray) {
+          hunter.play('hunter-idle')
+        }
+      }
+    }
     if (this.moving) {
       if (this.movePattern === 'clockwise') {
         for (let i = 0; i < this.hunters.length; i++) {
           Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0.005, this.circles[i].radius )
+          this.hunters[i].forEach(hunter => hunter.play('hunter-walking-sideways', true));
         }
       }
       else if (this.movePattern === 'anti-clockwise') {
         for (let i = 0; i < this.hunters.length; i++) {
           Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, -0.005, this.circles[i].radius )
+          this.hunters[i].forEach(hunter => hunter.play('hunter-walking-sideways', true));
         }
       }
       else if (this.movePattern === 'inward') {
         this.tween.resume()
         for (let i = 0; i < this.hunters.length; i++) {
           Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0, this.circles[i].radius )
+          this.hunters[i].forEach(hunter => hunter.play('hunter-walking-inwards', true));
         }
       }
       else (console.log('no move pattern found'))

@@ -41,6 +41,10 @@ export default class PlayerHelper {
     return [playerGroup, bulletGroup, shieldGroup];
   }
 
+  killPlayer() {
+    this.player.die()
+  }
+
   movePlayer() {
     if (this.cursors.left.isDown) {
       this.player.angle -= 2;

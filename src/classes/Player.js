@@ -10,6 +10,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.bulletGroup = bulletGroup;
     this.isVulnerable = true;
+    this.canShoot = true
 
     scene.anims.create({
       key: 'player-invulnerable',
@@ -33,15 +34,30 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     scene.anims.create({
       key: 'player-dies',
-      frames: 'boom',
+      frames: this.anims.generateFrameNumbers('boom', {
+        start: 0,
+        end: 23
+      }),
+      frameRate: 24,
+      repeat: 0,
       hideOnComplete: true
     })
   }
 
   shoot() {
-    const bullet = this.bulletGroup.get();
-    if (bullet) {
-      bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
+    if (this.canShoot) {
+      const bullet = this.bulletGroup.get();
+      if (bullet) {
+        bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
+        this.canShoot = false
+        this.scene.time.addEvent({
+          delay: 500,
+          loop: false,
+          callback: () => {
+            this.canShoot = true
+          }
+        })
+      }
     }
   }
 
@@ -61,9 +77,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
       });
       const isDead = health.decreaseHealth();
       if (isDead) {
-        this.play('player-dies')
+        this.die()
       }
       return isDead
     }
+  }
+
+  die() {
+    this.play('player-dies', true)
   }
 }

@@ -130,6 +130,9 @@ export class InputPanel extends Phaser.Scene {
     ) {
       this.cursor.set(8, 2);
       this.pressKey();
+    } else if (code === Phaser.Input.Keyboard.KeyCodes.ENTER) {
+      this.cursor.set(9, 2);
+      this.pressKey();
     } else if (
       code >= Phaser.Input.Keyboard.KeyCodes.A &&
       code <= Phaser.Input.Keyboard.KeyCodes.Z

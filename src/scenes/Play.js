@@ -15,10 +15,20 @@ export default class Play extends Phaser.Scene {
 
   create() {
     //is scene active
-    this.isActive = true
+    this.isActive = true;
 
     //health bar setup
     this.health = new Health(this);
+
+    //quack sound
+    this.quack = this.sound.add("quacksound", {
+      volume: 0.3,
+    });
+
+    //explosion sound
+    this.explosion = this.sound.add("explosionsound", {
+      volume: 0.3,
+    });
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this);
@@ -119,21 +129,22 @@ export default class Play extends Phaser.Scene {
       this.hunters,
       this.shieldGroup,
       (hunter, shield) => {
-        this.health.setToZero()
-        this.playerHelper.player.die()
-        this.isActive = false
-        this.time.delayedCall(2000, () => this.scene.start("gameover"))
+        this.health.setToZero();
+        this.playerHelper.player.die();
+        this.isActive = false;
+        this.time.delayedCall(2000, () => this.scene.start("gameover"));
       },
       null,
       this
-    )
+    );
   }
 
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
 
     if (player.hit(this.health)) {
-      this.isActive = false
+      this.explosion.play();
+      this.isActive = false;
       this.time.delayedCall(2000, () => this.scene.start("gameover"));
     }
   }
@@ -144,6 +155,7 @@ export default class Play extends Phaser.Scene {
     playerBullet.destroy();
     this.add.sprite(hunter.x, hunter.y, "boom").play("explode");
     hunter.isAlive = false;
+    this.quack.play();
     hunter.destroy();
   }
 
@@ -163,10 +175,10 @@ export default class Play extends Phaser.Scene {
         delay: 1000,
         loop: false,
         callback: () => {
-          incrementRound()
-          this.scene.restart()
-        }
-      })
+          incrementRound();
+          this.scene.restart();
+        },
+      });
     }
   }
 }

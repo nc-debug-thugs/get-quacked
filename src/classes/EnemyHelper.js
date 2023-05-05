@@ -50,7 +50,6 @@ export default class EnemyHelper {
   }
 
   setupEnemies() {
-    console.log(this.bulletSpeed, this.moveDelay)
     const bulletGroup = this.scene.physics.add.group({
       classType: HunterBullet,
       maxSize: 30,

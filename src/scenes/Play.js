@@ -77,7 +77,6 @@ export default class Play extends Phaser.Scene {
 
     // Random hunter selected to shoot at random time
     const shootDelay = 3000 - 200 * round
-
     this.time.addEvent({
       delay: Phaser.Math.Between(shootDelay - 100, shootDelay + 100),
       loop: true,

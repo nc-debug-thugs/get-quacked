@@ -30,6 +30,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 24,
       repeat: 0
     })
+
+    scene.anims.create({
+      key: 'player-dies',
+      frames: 'boom',
+      hideOnComplete: true
+    })
   }
 
   shoot() {
@@ -47,11 +53,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
         delay: 2000,
         loop: false,
         callback: () => {
-          this.isVulnerable = true;
-          this.play('player-vulnerable')
+          if (this) {
+            this.isVulnerable = true;
+            this.play('player-vulnerable')
+          }
         },
       });
-      return health.decreaseHealth();
+      const isDead = health.decreaseHealth();
+      if (isDead) {
+        this.play('player-dies')
+      }
+      return isDead
     }
   }
 }

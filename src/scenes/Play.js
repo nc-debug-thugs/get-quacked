@@ -112,7 +112,6 @@ export default class Play extends Phaser.Scene {
     hunterBullet.destroy();
 
     if (player.hit(this.health)) {
-      player.play("explode").setScale(1);
       this.hunters.getChildren().forEach((hunter) => {
         hunter.destroy();
       });

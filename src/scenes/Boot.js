@@ -41,9 +41,10 @@ export default class Boot extends Phaser.Scene {
       frameHeight: 64,
       endFrame: 23,
     });
-  }
 
-  create() {
-    this.scene.start("start");
+    this.load.on("complete", () => {
+      this.scene.start("start");
+    });
+    
   }
 }

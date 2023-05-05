@@ -17,11 +17,13 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   shoot() {
     let bullet = this.bulletGroup.get();
     if (bullet) {
+      const deviateX = Phaser.Math.FloatBetween(0.90, 1.1)
+      const deviateY = Phaser.Math.FloatBetween(0.90, 1.1)
       bullet.fire(
         this.x,
         this.y,
         Phaser.Math.RadToDeg(
-          Phaser.Math.Angle.Between(this.x, this.y, this.centerPoint.x, this.centerPoint.y)
+          Phaser.Math.Angle.Between(this.x, this.y, this.centerPoint.x * deviateX, this.centerPoint.y * deviateY)
         ),
         0,
         10,

@@ -10,6 +10,26 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.bulletGroup = bulletGroup;
     this.isVulnerable = true;
+
+    scene.anims.create({
+      key: 'player-invulnerable',
+      frames: this.anims.generateFrameNumbers('duck', {
+        start: 0,
+        end: 1
+      }),
+      frameRate: 24,
+      repeat: -1
+    })
+
+    scene.anims.create({
+      key: 'player-vulnerable',
+      frames: this.anims.generateFrameNumbers('duck', {
+        start: 0,
+        end: 0
+      }),
+      frameRate: 24,
+      repeat: 0
+    })
   }
 
   shoot() {
@@ -22,11 +42,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
   hit(health) {
     if (this.isVulnerable) {
       this.isVulnerable = false;
+      this.play('player-invulnerable')
       this.scene.time.addEvent({
         delay: 3000,
         loop: false,
         callback: () => {
           this.isVulnerable = true;
+          this.play('player-vulnerable')
         },
       });
       return health.decreaseHealth();

@@ -122,13 +122,11 @@ export default class Play extends Phaser.Scene {
         this.health.setToZero()
         this.playerHelper.killPlayer()
         this.isActive = false
-        // this.time.delayedCall(2000, () => this.scene.start("gameover"))
+        this.time.delayedCall(2000, () => this.scene.start("gameover"))
       },
       null,
       this
     )
-
-    // this.time.delayedCall(3000, () => this.playerHelper.killPlayer())
   }
 
   handlePlayerHit(player, hunterBullet) {

@@ -1,12 +1,13 @@
 import Phaser from 'phaser'
 
 export default class Enemy extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, bulletGroup) {
+  constructor(scene, x, y, bulletGroup, bulletSpeed) {
     super(scene, x, y, "hunter");
     this.setScale(1);
     this.setDepth(2)
 
     this.bulletGroup = bulletGroup;
+    this.bulletSpeed = bulletSpeed;
 
     this.createAnimations()
     scene.add.existing(this)
@@ -23,7 +24,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         ),
         0,
         10,
-        200
+        this.bulletSpeed
       );
     }
   }

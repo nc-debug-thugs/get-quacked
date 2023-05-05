@@ -4,7 +4,7 @@ import Health from "../classes/Health";
 import EnemyHelper from "../classes/EnemyHelper";
 import PlayerHelper from "../classes/PlayerHelper";
 
-import { score, round, updateScore } from "./PrePlay";
+import { score, round, updateScore, updateRound } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -141,6 +141,7 @@ export default class Play extends Phaser.Scene {
         delay: 1000,
         loop: false,
         callback: () => {
+          updateRound()
           this.scene.restart()
         }
       })

@@ -7,7 +7,7 @@ export default class EnemyHelper {
     this.scene = scene
     this.centerPoint = { x: scene.scale.gameSize.width / 2, y: scene.scale.gameSize.height / 2 };
 
-    this.circleStartRadius = 300  //radius of inner enemy circle
+    this.circleStartRadius = 100  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
 
     this.circles = []

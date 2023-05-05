@@ -8,6 +8,10 @@ export function updateScore(amount) {
   return score;
 }
 
+export function updateRound() {
+  round += 1
+}
+
 export default class PrePlay extends Phaser.Scene {
   constructor() {
     super({

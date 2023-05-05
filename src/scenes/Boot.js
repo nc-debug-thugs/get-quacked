@@ -44,6 +44,6 @@ export default class Boot extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start("start");
+    this.scene.start("play");
   }
 }

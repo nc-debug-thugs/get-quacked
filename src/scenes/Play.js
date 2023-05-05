@@ -37,8 +37,8 @@ export default class Play extends Phaser.Scene {
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this);
-    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies();
-    this.hunters = enemyGroup;
+    let [hunterGroups, hunterBulletGroup] = this.enemyHelper.setupEnemies();
+    this.hunters = hunterGroups;
     this.hunterBulletGroup = hunterBulletGroup;
 
     //player setup
@@ -77,8 +77,8 @@ export default class Play extends Phaser.Scene {
       loop: true,
       callback: () => {
         if (this.isActive) {
-          if (this.hunters.getChildren().length > 0) {
-            this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+          if (this.enemyHelper.getEnemiesLeft() > 0) {
+            this.enemyHelper.getRandomEnemy().shoot();
           }
         }
       },
@@ -176,7 +176,7 @@ export default class Play extends Phaser.Scene {
       this.playerHelper.movePlayer();
     }
 
-    if (this.hunters.getChildren().length === 0) {
+    if (this.enemyHelper.getEnemiesLeft() === 0) {
       this.time.addEvent({
         delay: 1000,
         loop: false,

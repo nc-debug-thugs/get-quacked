@@ -11,7 +11,7 @@ export default class EnemyHelper {
     this.circleStepRadius = 50    //radius increase of each further enemy circle
 
     this.circles = []
-    this.hunters = []
+    this.hunterGroups = []
 
     this.moveDelay = 2000 //Delay in ms between enemy moves
     this.moveFor = 500    //Time in ms enemies move for
@@ -47,9 +47,6 @@ export default class EnemyHelper {
   }
 
   setupEnemies() {
-    const enemyGroup = this.scene.physics.add.group({
-      runChildUpdate: true
-    })
     const bulletGroup = this.scene.physics.add.group({
       classType: HunterBullet,
       maxSize: 30,
@@ -64,21 +61,18 @@ export default class EnemyHelper {
     //place hunters on circles and add them to the enemies group
     let depth = 4 //depth of first row
     for (const circle of this.circles) {
-      const hunterSubarray = []
+      const enemySubGroup = this.scene.physics.add.group({
+        runChildUpdate: true
+      })
       for(let i = 0; i < 5; i++) {
         const hunter = new Hunter(this.scene, 0, 0, bulletGroup)
+        enemySubGroup.add(hunter)
         hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
-        hunterSubarray.push(hunter)
-        Phaser.Actions.PlaceOnCircle(hunterSubarray, circle, 4, 5)
+        hunter.body.setSize(45, 45)
+        Phaser.Actions.PlaceOnCircle(enemySubGroup.getChildren(), circle, 4, 5)
       }
-      enemyGroup.addMultiple(hunterSubarray)
-      this.hunters.push(hunterSubarray)
+      this.hunterGroups.push(enemySubGroup)
       depth -= 1
-    }
-
-    //iterate through all enemies, reduce bounding box size
-    for (const hunter of enemyGroup.getChildren()) {
-      hunter.body.setSize(45, 45)
     }
 
     //set up tween for inwards movement
@@ -88,7 +82,7 @@ export default class EnemyHelper {
       radius: 0
     })
 
-    return [enemyGroup, bulletGroup]
+    return [this.hunterGroups, bulletGroup]
   }
 
   _updateMovePattern() {
@@ -105,37 +99,49 @@ export default class EnemyHelper {
     if (this.moveInt > 12) this.moveInt = 1
   }
 
-  getRandomEnemy(enemies) {
-    return enemies[Math.floor(Math.random() * enemies.length)]
+  getRandomEnemy() {
+    const hunters = []
+    for (const hunterGroup of this.hunterGroups) {
+      hunters.push(...hunterGroup.getChildren())
+    }
+    return hunters[Math.floor(Math.random() * hunters.length)]
+  }
+
+  getEnemiesLeft() {
+    let enemiesLeft = 0
+    for (const hunterGroup of this.hunterGroups) {
+      enemiesLeft += hunterGroup.getChildren().length
+    }
+    return enemiesLeft
   }
 
   moveEnemies() {
     this.tween.pause()
     if (!this.moving) {
-      for (const hunterSubarray of this.hunters) {
-        // for (const hunter of hunterSubarray) {
-        //   hunter.play('hunter-idle')
-        // }
+      for (const hunterGroup of this.hunterGroups) {
+        for (const hunter of hunterGroup.getChildren()) {
+          hunter.play('hunter-idle')
+        }
       }
     }
     if (this.moving) {
       if (this.movePattern === 'clockwise') {
-        for (let i = 0; i < this.hunters.length; i++) {
-          Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0.005, this.circles[i].radius )
-          // this.hunters[i].forEach(hunter => hunter.play('hunter-walking-sideways', true));
+        for (let i = 0; i < this.circles.length; i++) {
+          Phaser.Actions.RotateAroundDistance(this.hunterGroups[i].getChildren(), this.centerPoint, 0.005, this.circles[i].radius )
+          this.hunterGroups[i].getChildren().forEach(hunter => hunter.play('hunter-walking-sideways', true));
         }
       }
       else if (this.movePattern === 'anti-clockwise') {
-        for (let i = 0; i < this.hunters.length; i++) {
-          Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, -0.005, this.circles[i].radius )
-          // this.hunters[i].forEach(hunter => hunter.play('hunter-walking-sideways', true));
+        for (let i = 0; i < this.circles.length; i++) {
+          Phaser.Actions.RotateAroundDistance(this.hunterGroups[i].getChildren(), this.centerPoint, -0.005, this.circles[i].radius )
+          this.hunterGroups[i].getChildren().forEach(hunter => hunter.play('hunter-walking-sideways', true));
         }
       }
       else if (this.movePattern === 'inward') {
         this.tween.resume()
-        for (let i = 0; i < this.hunters.length; i++) {
-          Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0, this.circles[i].radius )
-          // this.hunters[i].forEach(hunter => hunter.play('hunter-walking-inwards', true));
+        for (let i = 0; i < this.circles.length; i++) {
+          Phaser.Actions.RotateAroundDistance(this.hunterGroups[i].getChildren(), this.centerPoint, 0, this.circles[i].radius )
+          this.hunterGroups[i].getChildren().forEach(hunter => hunter.play('hunter-walking-inwards', true));
         }
       }
       else (console.log('no move pattern found'))

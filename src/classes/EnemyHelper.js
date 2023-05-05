@@ -7,18 +7,18 @@ export default class EnemyHelper {
     this.scene = scene
     this.centerPoint = { x: scene.scale.gameSize.width / 2, y: scene.scale.gameSize.height / 2 };
 
-    this.circleStartRadius = 300  //radius of inner enemy circle
+    this.circleStartRadius = 320  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
 
     this.circles = []
     this.hunters = []
 
-    this.moveDelay = 50 //Delay in ms between enemy moves
+    this.moveDelay = 2000 //Delay in ms between enemy moves
     this.moveFor = 500    //Time in ms enemies move for
 
     this.moving = false
     this.moveInt = 1
-    this.movePattern = 'clockwise'
+    this.movePattern = 'inward'
 
     this._startMoveEveryDelay()
   }
@@ -93,10 +93,10 @@ export default class EnemyHelper {
 
   _updateMovePattern() {
     if (this.moveInt < 6) {
-      this.movePattern = 'inward'
+      this.movePattern = 'clockwise'
     }
     if (this.moveInt > 6) {
-      this.movePattern = 'inward'
+      this.movePattern = 'anticlockwise'
     }
     if (this.moveInt % 6 === 0) {
       this.movePattern = 'inward'

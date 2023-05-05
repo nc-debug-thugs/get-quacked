@@ -44,7 +44,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.isVulnerable = false;
       this.play('player-invulnerable')
       this.scene.time.addEvent({
-        delay: 3000,
+        delay: 2000,
         loop: false,
         callback: () => {
           this.isVulnerable = true;

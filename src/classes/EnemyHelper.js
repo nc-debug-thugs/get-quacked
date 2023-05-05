@@ -78,7 +78,7 @@ export default class EnemyHelper {
 
     //iterate through all enemies, reduce bounding box size
     for (const hunter of enemyGroup.getChildren()) {
-      hunter.body.setSize(450, 450)
+      hunter.body.setSize(45, 45)
     }
 
     //set up tween for inwards movement

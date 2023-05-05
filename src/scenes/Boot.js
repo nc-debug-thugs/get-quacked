@@ -14,7 +14,11 @@ export default class Boot extends Phaser.Scene {
       endFrame: 1
     });
     this.load.image("bullet", "../assets/images/egg.png");
-    this.load.image("hunter", "../assets/images/hunter.png");
+    this.load.spritesheet("hunter", "../assets/images/hunter.png", {
+      frameWidth: 128,
+      frameHeight: 128,
+      endFrame: 1
+    });
     this.load.image("background", "../assets/images/background.png");
     this.load.image("start", "../assets/images/start.png");
     this.load.image("spacebar", "../assets/images/spacebar.png");

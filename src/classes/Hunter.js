@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 export default class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, bulletGroup) {
     super(scene, x, y, "hunter");
-    this.setScale(0.08);
+    this.setScale(1);
     this.setDepth(2)
 
     this.bulletGroup = bulletGroup;

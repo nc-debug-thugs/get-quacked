@@ -72,8 +72,10 @@ export default class Play extends Phaser.Scene {
     bgImage.setScale(1).setScrollFactor(0);
 
     // Random hunter selected to shoot at random time
+    const shootDelay = 3000 - 200 * round
+
     this.time.addEvent({
-      delay: Phaser.Math.Between(1000, 2000),
+      delay: Phaser.Math.Between(shootDelay - 100, shootDelay + 100),
       loop: true,
       callback: () => {
         if (this.isActive) {

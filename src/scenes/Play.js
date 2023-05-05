@@ -35,6 +35,10 @@ export default class Play extends Phaser.Scene {
       volume: 0.3,
     });
 
+    this.clink = this.sound.add("clink", {
+      volume: 0.4,
+    });
+
     //enemy setup
     this.enemyHelper = new EnemyHelper(this, round);
     let [hunterGroups, hunterBulletGroup] = this.enemyHelper.setupEnemies();
@@ -169,6 +173,7 @@ export default class Play extends Phaser.Scene {
 
   handleShieldCollision(bullet, shield) {
     bullet.destroy();
+    this.clink.play();
     shield.hit();
   }
 

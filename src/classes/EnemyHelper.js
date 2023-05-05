@@ -7,7 +7,7 @@ export default class EnemyHelper {
     this.scene = scene
     this.centerPoint = { x: scene.scale.gameSize.width / 2, y: scene.scale.gameSize.height / 2 };
 
-    this.circleStartRadius = 100  //radius of inner enemy circle
+    this.circleStartRadius = 300  //radius of inner enemy circle
     this.circleStepRadius = 50    //radius increase of each further enemy circle
 
     this.circles = []
@@ -65,7 +65,7 @@ export default class EnemyHelper {
     let depth = 4 //depth of first row
     for (const circle of this.circles) {
       const hunterSubarray = []
-      for(let i = 0; i < 1; i++) {
+      for(let i = 0; i < 5; i++) {
         const hunter = new Hunter(this.scene, 0, 0, bulletGroup)
         hunter.setDepth(depth) //make sure hunters in front draw on top of those behind
         hunterSubarray.push(hunter)

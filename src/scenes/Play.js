@@ -15,8 +15,7 @@ export default class Play extends Phaser.Scene {
 
   create() {
     //health bar setup
-    const maxHealth = 3
-    this.health = new Health(this, currentHealth, maxHealth);
+    this.health = new Health(this);
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this);

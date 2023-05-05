@@ -30,6 +30,11 @@ export default class Play extends Phaser.Scene {
       volume: 0.3,
     });
 
+    //getting hit sound
+    this.oof = this.sound.add("oof", {
+      volume: 0.3,
+    });
+
     //enemy setup
     this.enemyHelper = new EnemyHelper(this);
     let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies();
@@ -141,6 +146,7 @@ export default class Play extends Phaser.Scene {
 
   handlePlayerHit(player, hunterBullet) {
     hunterBullet.destroy();
+    this.oof.play();
 
     if (player.hit(this.health)) {
       this.explosion.play();

@@ -10,6 +10,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.bulletGroup = bulletGroup;
     this.isVulnerable = true;
+    this.canShoot = true
 
     scene.anims.create({
       key: 'player-invulnerable',
@@ -39,9 +40,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   shoot() {
-    const bullet = this.bulletGroup.get();
-    if (bullet) {
-      bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
+    if (this.canShoot) {
+      const bullet = this.bulletGroup.get();
+      if (bullet) {
+        bullet.fire(this.x, this.y, this.angle, 0, 90, 600);
+        this.canShoot = false
+        this.scene.time.addEvent({
+          delay: 500,
+          loop: false,
+          callback: () => {
+            this.canShoot = true
+          }
+        })
+      }
     }
   }
 

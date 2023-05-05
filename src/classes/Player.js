@@ -6,7 +6,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.setActive(true);
     this.setVisible(true);
     this.setDepth(2);
-    this.setScale(0.06);
+    this.setScale(.7);
 
     this.bulletGroup = bulletGroup;
     this.isVulnerable = true;

@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { score } from "./PrePlay";
 
 export class InputPanel extends Phaser.Scene {
   constructor() {
@@ -188,7 +189,7 @@ export class Highscore extends Phaser.Scene {
     this.add
       .bitmapText(100, 260, "arcade", "RANK  SCORE   NAME")
       .setTint(0xff00ff);
-    this.add.bitmapText(100, 310, "arcade", "1ST   50000").setTint(0xff0000);
+    this.add.bitmapText(100, 310, "arcade", `???   ${score}`).setTint(0xff0000);
 
     this.playerText = this.add
       .bitmapText(580, 310, "arcade", "")
@@ -211,16 +212,16 @@ export class Highscore extends Phaser.Scene {
     this.scene.stop("InputPanel");
 
     this.add
-      .bitmapText(100, 360, "arcade", "2ND   40000    ANT")
+      .bitmapText(100, 360, "arcade", "???   00000    ???")
       .setTint(0xff8200);
     this.add
-      .bitmapText(100, 410, "arcade", "3RD   30000    .-.")
+      .bitmapText(100, 410, "arcade", "???   00000    ???")
       .setTint(0xffff00);
     this.add
-      .bitmapText(100, 460, "arcade", "4TH   20000    BOB")
+      .bitmapText(100, 460, "arcade", "???   00000    ???")
       .setTint(0x00ff00);
     this.add
-      .bitmapText(100, 510, "arcade", "5TH   10000    ZIK")
+      .bitmapText(100, 510, "arcade", "???   00000    ???")
       .setTint(0x00bfff);
   }
 

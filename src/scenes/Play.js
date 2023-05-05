@@ -4,7 +4,7 @@ import Health from "../classes/Health";
 import EnemyHelper from "../classes/EnemyHelper";
 import PlayerHelper from "../classes/PlayerHelper";
 
-import { score, round, updateScore } from "./PrePlay";
+import { score, round, updateScore, incrementRound, currentHealth } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
   constructor() {
@@ -15,7 +15,7 @@ export default class Play extends Phaser.Scene {
 
   create() {
     //health bar setup
-    this.health = new Health(this, 3);
+    this.health = new Health(this);
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this);
@@ -58,7 +58,9 @@ export default class Play extends Phaser.Scene {
       delay: Phaser.Math.Between(1000, 2000),
       loop: true,
       callback: () => {
-        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+        if (this.hunters.getChildren().length > 0) {
+          this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+        }
       },
       callbackScope: this,
     });
@@ -133,5 +135,16 @@ export default class Play extends Phaser.Scene {
   update() {
     this.enemyHelper.moveEnemies();
     this.playerHelper.movePlayer();
+
+    if (this.hunters.getChildren().length === 0) {
+      this.time.addEvent({
+        delay: 1000,
+        loop: false,
+        callback: () => {
+          incrementRound()
+          this.scene.restart()
+        }
+      })
+    }
   }
 }

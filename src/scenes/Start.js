@@ -68,8 +68,8 @@ export default class Start extends Phaser.Scene {
 
     //enemy setup
     this.enemyHelper = new EnemyHelper(this);
-    let [enemyGroup, hunterBulletGroup] = this.enemyHelper.setupEnemies();
-    this.hunters = enemyGroup;
+    let [hunterGroups, hunterBulletGroup] = this.enemyHelper.setupEnemies();
+    this.hunters = hunterGroups;
     this.hunterBulletGroup = hunterBulletGroup;
 
     //player setup
@@ -85,7 +85,7 @@ export default class Start extends Phaser.Scene {
       delay: Phaser.Math.Between(1000, 2000),
       loop: true,
       callback: () => {
-        this.enemyHelper.getRandomEnemy(this.hunters.getChildren()).shoot();
+        this.enemyHelper.getRandomEnemy().shoot();
       },
       callbackScope: this,
     });

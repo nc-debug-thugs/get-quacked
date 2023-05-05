@@ -243,7 +243,7 @@ export default class Start extends Phaser.Scene {
       this.player.shoot();
     }
 
-    if (this.cursors.up.isDown) {
+    if (this.input.keyboard.checkDown(this.input.keyboard.addKey("A"))) {
       Phaser.Actions.RotateAroundDistance(
         this.shieldGroup.getChildren(),
         { x: 400, y: 300 },
@@ -252,7 +252,7 @@ export default class Start extends Phaser.Scene {
       );
     }
 
-    if (this.cursors.down.isDown) {
+    if (this.input.keyboard.checkDown(this.input.keyboard.addKey("D"))) {
       Phaser.Actions.RotateAroundDistance(
         this.shieldGroup.getChildren(),
         { x: 400, y: 300 },

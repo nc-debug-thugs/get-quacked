@@ -96,7 +96,7 @@ export default class EnemyHelper {
       this.movePattern = 'clockwise'
     }
     if (this.moveInt > 6) {
-      this.movePattern = 'anticlockwise'
+      this.movePattern = 'anti-clockwise'
     }
     if (this.moveInt % 6 === 0) {
       this.movePattern = 'inward'
@@ -111,21 +111,31 @@ export default class EnemyHelper {
 
   moveEnemies() {
     this.tween.pause()
+    if (!this.moving) {
+      for (const hunterSubarray of this.hunters) {
+        for (const hunter of hunterSubarray) {
+          hunter.play('hunter-idle')
+        }
+      }
+    }
     if (this.moving) {
       if (this.movePattern === 'clockwise') {
         for (let i = 0; i < this.hunters.length; i++) {
           Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0.005, this.circles[i].radius )
+          this.hunters[i].forEach(hunter => hunter.play('hunter-walking-sideways', true));
         }
       }
       else if (this.movePattern === 'anti-clockwise') {
         for (let i = 0; i < this.hunters.length; i++) {
           Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, -0.005, this.circles[i].radius )
+          this.hunters[i].forEach(hunter => hunter.play('hunter-walking-sideways', true));
         }
       }
       else if (this.movePattern === 'inward') {
         this.tween.resume()
         for (let i = 0; i < this.hunters.length; i++) {
           Phaser.Actions.RotateAroundDistance(this.hunters[i], this.centerPoint, 0, this.circles[i].radius )
+          this.hunters[i].forEach(hunter => hunter.play('hunter-walking-inwards', true));
         }
       }
       else (console.log('no move pattern found'))

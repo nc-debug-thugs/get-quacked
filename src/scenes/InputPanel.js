@@ -178,15 +178,15 @@ export class Highscore extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("block", "../assets/images/block.png");
-    this.load.image("rub", "../assets/images/rub.png");
-    this.load.image("end", "../assets/images/end.png");
+    // this.load.image("block", "../assets/images/block.png");
+    // this.load.image("rub", "../assets/images/rub.png");
+    // this.load.image("end", "../assets/images/end.png");
 
-    this.load.bitmapFont(
-      "arcade",
-      "../assets/images/arcade.png",
-      "../assets/images/arcade.xml"
-    );
+    // this.load.bitmapFont(
+    //   "arcade",
+    //   "../assets/images/arcade.png",
+    //   "../assets/images/arcade.xml"
+    // );
   }
 
   create() {

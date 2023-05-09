@@ -26,7 +26,7 @@ export default class PrePlay extends Phaser.Scene {
 
   preload() {
     this.load.on("complete", () => {
-      this.scene.start("play");
+      this.scene.start("Highscore");
     });
   }
 

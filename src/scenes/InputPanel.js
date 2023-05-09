@@ -246,6 +246,10 @@ export class Highscore extends Phaser.Scene {
       if (i >= this.newHighscores.length) loop = false
     }
 
+    this.time.delayedCall(5000, () => {
+      this.scene.start('start')
+    })
+
     // this.newHighscores.forEach((score, i) => {
     //   // if (this.playerInd !== i) {
     //     this.add.bitmapText(

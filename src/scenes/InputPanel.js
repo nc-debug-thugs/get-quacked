@@ -2,7 +2,9 @@ import Phaser from "phaser";
 import { score } from "./PrePlay";
 import { highscores } from '../firebase';
 
-let initials = "";
+const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
+const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
+
 
 export class InputPanel extends Phaser.Scene {
   constructor() {
@@ -190,10 +192,12 @@ export class Highscore extends Phaser.Scene {
   }
 
   create() {
+    console.log(highscores[0].score, score)
+    this.playerInd = highscores.findIndex((s) => {return s.score < score})
     this.add
       .bitmapText(100, 260, "arcade", "RANK  SCORE   NAME")
       .setTint(0xff00ff);
-    this.add.bitmapText(100, 310, "arcade", `???   ${score}`).setTint(0xff0000);
+    this.add.bitmapText(100, 310, "arcade", `${rank[this.playerInd]}   ${score}`).setTint(0xff0000);
 
     this.playerText = this.add
       .bitmapText(580, 310, "arcade", "")
@@ -212,24 +216,28 @@ export class Highscore extends Phaser.Scene {
   }
 
   submitName() {
+    const newHighscores = [...highscores]
     this.scene.stop("InputPanel");
 
-    const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
-    const place = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
+    // const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
+    // const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
 
-    highscores.forEach((score, i) => {
-      this.add.bitmapText(
-        100,
-        360 + i * 50,
-        'arcade',
-        `${place[i]}   ${score.score}`
-      ).setTint(tint[i])
-      this.add.bitmapText(
-        580,
-        360 + i * 50,
-        'arcade',
-        `${score.name}`
-      ).setTint(tint[i])
+    newHighscores.forEach((score, i) => {
+      console.log(newHighscores.length)
+      if (this.playerInd !== i) {
+        this.add.bitmapText(
+          100,
+          360 + i * 50,
+          'arcade',
+          `${rank[i]}   ${score.score}`
+        ).setTint(tint[i])
+        this.add.bitmapText(
+          580,
+          360 + i * 50,
+          'arcade',
+          `${score.name}`
+        ).setTint(tint[i])
+      }
     })
 
   //   this.add

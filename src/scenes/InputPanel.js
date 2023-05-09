@@ -26,6 +26,8 @@ export class InputPanel extends Phaser.Scene {
 
   create() {
 
+    this.initials = "";
+
     let text = this.add.bitmapText(
       130,
       50,

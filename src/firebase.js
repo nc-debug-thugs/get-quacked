@@ -25,13 +25,16 @@ initializeApp(firebaseConfig);
 // Init services
 const db = getFirestore();
 
-export async function getScores() {
+export const highscores = []
+
+export function getScores() {
   // Collection ref
   const colRef = collection(db, "scores");
   // construct query
   const q = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(6))
   // Get collection data
   getDocs(q).then((snapshot) => {
-    snapshot.forEach((doc)=> {console.log(doc.get('score'), doc.get('username'))});
+    snapshot.forEach((doc)=> { highscores.push({score: doc.get('score'), name: doc.get('username')})});
+    // console.log(highscores)
   });
 }

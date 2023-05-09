@@ -9,8 +9,8 @@ export default class Boot extends Phaser.Scene {
   }
 
   preload() {
-
-    getScores()
+    this.highscores = []
+    getScores(this.highscores)
 
     this.load.spritesheet("duck", "../assets/images/duck.png", {
       frameWidth: 128,

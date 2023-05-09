@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import EnemyHelper from "../classes/EnemyHelper";
 import PlayerHelper from "../classes/PlayerHelper";
+import { highscores } from "../firebase";
 
 export default class Start extends Phaser.Scene {
   constructor() {
@@ -10,6 +11,7 @@ export default class Start extends Phaser.Scene {
   }
 
   create() {
+    console.log(highscores)
     let bgImage = this.add.image(
       this.cameras.main.width / 2,
       this.cameras.main.height / 2,

@@ -32,7 +32,7 @@ export default class PrePlay extends Phaser.Scene {
 
   create() {
     round = 1;
-    score = 200000;
+    score = 0;
     currentHealth = 3;
   }
 

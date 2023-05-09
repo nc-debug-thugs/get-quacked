@@ -35,7 +35,7 @@ export function getScores() {
   // Collection ref
   const colRef = collection(db, "scores");
   // construct query
-  const q = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(6))
+  const q = query(collection(db, 'scores'), orderBy('score', 'desc'))
   // Get collection data
   onSnapshot (q, (snapshot) => {
     console.log('getting snapshot')
@@ -50,5 +50,5 @@ export function addScore(score, name) {
   addDoc(colRef, {
     score: score,
     username: name,
-  });   
+  })   
 }

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { score } from "./PrePlay";
+import { score, updateScore } from "./PrePlay";
 import { highscores, addScore } from '../firebase';
 
 const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
@@ -208,8 +208,7 @@ export class Highscore extends Phaser.Scene {
 
     //  Do this, otherwise this Scene will steal all keyboard input
     this.input.keyboard.enabled = false;
-
-    this.scene.launch("InputPanel");
+    this.scene.launch("InputPanel")
 
     let panel = this.scene.get("InputPanel");
 
@@ -219,8 +218,9 @@ export class Highscore extends Phaser.Scene {
   }
 
   submitName() {
+    console.log('submitting-name')
     this.scene.stop("InputPanel");
-
+    
     addScore(score, this.playerName)
 
     let loop = false

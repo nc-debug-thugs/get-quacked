@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { score } from "./PrePlay";
-import { highScores } from "../data/test-scores";
+import { highscores } from '../firebase';
 
 let initials = "";
 
@@ -214,39 +214,58 @@ export class Highscore extends Phaser.Scene {
   submitName() {
     this.scene.stop("InputPanel");
 
-    this.add
-      .bitmapText(
+    const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
+    const place = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
+
+    highscores.forEach((score, i) => {
+      this.add.bitmapText(
         100,
-        360,
-        "arcade",
-        `1ST   ${highScores.place1.score}    ${highScores.place1.initials}`
-      )
-      .setTint(0xff8200);
-    this.add
-      .bitmapText(
-        100,
-        410,
-        "arcade",
-        `2ND   ${highScores.place2.score}    ${highScores.place2.initials}`
-      )
-      .setTint(0xffff00);
-    this.add
-      .bitmapText(
-        100,
-        460,
-        "arcade",
-        `3RD   ${highScores.place3.score}    ${highScores.place3.initials}`
-      )
-      .setTint(0x00ff00);
-    this.add
-      .bitmapText(
-        100,
-        510,
-        "arcade",
-        `4TH   ${highScores.place3.score}    ${highScores.place3.initials}`
-      )
-      .setTint(0x00bfff);
-  }
+        360 + i * 50,
+        'arcade',
+        `${place[i]}   ${score.score}`
+      ).setTint(tint[i])
+      this.add.bitmapText(
+        580,
+        360 + i * 50,
+        'arcade',
+        `${score.name}`
+      ).setTint(tint[i])
+    })
+
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       360,
+  //       "arcade",
+  //       `1ST   ${highScores.place1.score}    ${highScores.place1.initials}`
+  //     )
+  //     .setTint(0xff8200);
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       410,
+  //       "arcade",
+  //       `2ND   ${highScores.place2.score}    ${highScores.place2.initials}`
+  //     )
+  //     .setTint(0xffff00);
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       460,
+  //       "arcade",
+  //       `3RD   ${highScores.place3.score}    ${highScores.place3.initials}`
+  //     )
+  //     .setTint(0x00ff00);
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       510,
+  //       "arcade",
+  //       `4TH   ${highScores.place3.score}    ${highScores.place3.initials}`
+  //     )
+  //     .setTint(0x00bfff);
+  // 
+}
 
   updateName(name) {
     this.playerText.setText(name);

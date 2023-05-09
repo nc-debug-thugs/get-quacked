@@ -6,7 +6,8 @@ import {
   getDocs,
   query,
   orderBy,
-  limit
+  limit,
+  addDoc
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -18,6 +19,8 @@ const firebaseConfig = {
   appId: "1:993090585296:web:a44120657c99a2afe294d5",
   measurementId: "G-LCM4YZG99Q",
 };
+
+
 
 // Init firebase app
 initializeApp(firebaseConfig);
@@ -37,4 +40,13 @@ export function getScores() {
     snapshot.forEach((doc)=> { highscores.push({score: doc.get('score'), name: doc.get('username')})});
     // console.log(highscores)
   });
+
+}
+
+export function addScore(score, name) {
+  const colRef = collection(db, "scores");
+  addDoc(colRef, {
+    score: score,
+    username: name,
+  });   
 }

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { score } from "./PrePlay";
-import { highscores } from '../firebase';
+import { highscores, addScore } from '../firebase';
 
 const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
 const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH', 'OFF']
@@ -217,8 +217,9 @@ export class Highscore extends Phaser.Scene {
   }
 
   submitName() {
-    // this.newHighscores.splice(this.playerInd, 1)
     this.scene.stop("InputPanel");
+
+    addScore(score, this.playerName)
 
     let loop = false
     let i = 0
@@ -299,5 +300,6 @@ export class Highscore extends Phaser.Scene {
 
   updateName(name) {
     this.playerText.setText(name);
+    this.playerName = name
   }
 }

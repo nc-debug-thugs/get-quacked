@@ -69,9 +69,9 @@ To run _Get quacked!_ locally:
 
 To start the game, press the <kbd>Enter</kbd> key or click on the screen.
 
-### <kbd>⬅</kbd> (left) and <kbd>➡</kbd> (right)
+### <kbd>←</kbd> and <kbd>→</kbd>
 
-To rotate the duck, use the <kbd>⬅</kbd> and <kbd>➡</kbd> arrow keys.
+To rotate the duck, use the <kbd>←</kbd> (left) and <kbd>→</kbd> (right) arrow keys.
 
 ### <kbd>Spacebar</kbd>
 
@@ -81,6 +81,7 @@ To shoot, press the <kbd>Spacebar</kbd>.
 
 To rotate the shield to the left or to the right, use the <kbd>A</kbd> and <kbd>D</kbd> keys, respectively.
 
-### High scores
+### High score
 
 Made it into the leaderboard? Enter your initials by typing them in or clicking on the letters. Then press <kbd>Enter</kbd> or click on `END` to publish your score.
+

@@ -1,6 +1,9 @@
 import Phaser from "phaser";
-import { score } from "./PrePlay";
-import { highScores } from "../data/test-scores";
+import { score, updateScore } from "./PrePlay";
+import { highscores, addScore } from '../firebase';
+
+const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
+const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH', 'OFF']
 
 export class InputPanel extends Phaser.Scene {
   constructor() {
@@ -22,6 +25,9 @@ export class InputPanel extends Phaser.Scene {
   }
 
   create() {
+
+    this.initials = "";
+
     let text = this.add.bitmapText(
       130,
       50,
@@ -176,22 +182,25 @@ export class Highscore extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("block", "../assets/images/block.png");
-    this.load.image("rub", "../assets/images/rub.png");
-    this.load.image("end", "../assets/images/end.png");
+    // this.load.image("block", "../assets/images/block.png");
+    // this.load.image("rub", "../assets/images/rub.png");
+    // this.load.image("end", "../assets/images/end.png");
 
-    this.load.bitmapFont(
-      "arcade",
-      "../assets/images/arcade.png",
-      "../assets/images/arcade.xml"
-    );
+    // this.load.bitmapFont(
+    //   "arcade",
+    //   "../assets/images/arcade.png",
+    //   "../assets/images/arcade.xml"
+    // );
   }
 
   create() {
+    this.newHighscores = [...highscores]
+    this.playerInd = highscores.findIndex((s) => {return s.score < score})
+    if (this.playerInd === -1) this.playerInd = 6
     this.add
       .bitmapText(100, 260, "arcade", "RANK  SCORE   NAME")
       .setTint(0xff00ff);
-    this.add.bitmapText(100, 310, "arcade", `???   ${score}`).setTint(0xff0000);
+    this.add.bitmapText(100, 310, "arcade", `${rank[this.playerInd]}   ${score}`).setTint(0xff0000);
 
     this.playerText = this.add
       .bitmapText(580, 310, "arcade", "")
@@ -199,8 +208,7 @@ export class Highscore extends Phaser.Scene {
 
     //  Do this, otherwise this Scene will steal all keyboard input
     this.input.keyboard.enabled = false;
-
-    this.scene.launch("InputPanel");
+    this.scene.launch("InputPanel")
 
     let panel = this.scene.get("InputPanel");
 
@@ -210,43 +218,94 @@ export class Highscore extends Phaser.Scene {
   }
 
   submitName() {
+    console.log('submitting-name')
     this.scene.stop("InputPanel");
+    
+    addScore(score, this.playerName)
 
-    this.add
-      .bitmapText(
-        100,
-        360,
-        "arcade",
-        `1ST   ${highScores.place1.score}    ${highScores.place1.initials}`
-      )
-      .setTint(0xff8200);
-    this.add
-      .bitmapText(
-        100,
-        410,
-        "arcade",
-        `2ND   ${highScores.place2.score}    ${highScores.place2.initials}`
-      )
-      .setTint(0xffff00);
-    this.add
-      .bitmapText(
-        100,
-        460,
-        "arcade",
-        `3RD   ${highScores.place3.score}    ${highScores.place3.initials}`
-      )
-      .setTint(0x00ff00);
-    this.add
-      .bitmapText(
-        100,
-        510,
-        "arcade",
-        `4TH   ${highScores.place3.score}    ${highScores.place3.initials}`
-      )
-      .setTint(0x00bfff);
-  }
+    let loop = false
+    let i = 0
+    let j = 0
+    if (this.newHighscores.length > 0) loop = true
+    while (loop) {
+      if (this.playerInd !== i) {
+        const score = this.newHighscores[i]
+        this.add.bitmapText(
+          100,
+          360 + j * 50,
+          'arcade',
+          `${rank[i]}   ${score.score}`
+        ).setTint(tint[j])
+        this.add.bitmapText(
+          580,
+          360 + j * 50,
+          'arcade',
+          `${score.name}`
+        ).setTint(tint[j])
+        j += 1
+      }
+      i += 1
+      if (i >= this.newHighscores.length) loop = false
+    }
+
+    this.time.delayedCall(5000, () => {
+      this.scene.start('start')
+    })
+
+    // this.newHighscores.forEach((score, i) => {
+    //   // if (this.playerInd !== i) {
+    //     this.add.bitmapText(
+    //       100,
+    //       360 + i * 50,
+    //       'arcade',
+    //       `${rank[i]}   ${score.score}`
+    //     ).setTint(tint[i])
+    //     this.add.bitmapText(
+    //       580,
+    //       360 + i * 50,
+    //       'arcade',
+    //       `${score.name}`
+    //     ).setTint(tint[i])
+    //   // }
+    // })
+
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       360,
+  //       "arcade",
+  //       `1ST   ${highScores.place1.score}    ${highScores.place1.initials}`
+  //     )
+  //     .setTint(0xff8200);
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       410,
+  //       "arcade",
+  //       `2ND   ${highScores.place2.score}    ${highScores.place2.initials}`
+  //     )
+  //     .setTint(0xffff00);
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       460,
+  //       "arcade",
+  //       `3RD   ${highScores.place3.score}    ${highScores.place3.initials}`
+  //     )
+  //     .setTint(0x00ff00);
+  //   this.add
+  //     .bitmapText(
+  //       100,
+  //       510,
+  //       "arcade",
+  //       `4TH   ${highScores.place3.score}    ${highScores.place3.initials}`
+  //     )
+  //     .setTint(0x00bfff);
+  // 
+}
 
   updateName(name) {
     this.playerText.setText(name);
+    this.playerName = name
   }
 }

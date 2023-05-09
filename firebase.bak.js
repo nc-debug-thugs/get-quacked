@@ -3,9 +3,6 @@ import {
   getFirestore,
   collection,
   getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -24,21 +21,22 @@ initializeApp(firebaseConfig);
 // Init services
 const db = getFirestore();
 
-// Collection ref
-const colRef = collection(db, "scores");
-
-// Get collection data
-getDocs(colRef).then((snapshot) => {
-  console.log(snapshot.docs);
-});
+export function getScores() {
+  // Collection ref
+  const colRef = collection(db, "scores");
+  // Get collection data
+  getDocs(colRef).then((snapshot) => {
+    console.log(snapshot.docs);
+  });
+}
 
 // Adding documents
-addDoc(colRef, {
-  score: 0,
-  username: "USR",
-});
+// addDoc(colRef, {
+//   score: 0,
+//   username: "USR",
+// });
 
 // Deleting documents
-const docRef = doc(db, "scores", "refId");
+// const docRef = doc(db, "scores", "refId");
 
-deleteDoc(docRef);
+// deleteDoc(docRef);

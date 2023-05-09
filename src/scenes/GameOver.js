@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { score } from "./PrePlay";
+import {highscores} from '../firebase'
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
@@ -30,7 +31,13 @@ export default class GameOver extends Phaser.Scene {
       delay: 3000,
       loop: false,
       callback: () => {
-        this.scene.start("Highscore");
+        if (highscores.findIndex((s) => {return s.score < score}) === -1) {
+          this.scene.start('start')
+        }
+        else {
+          this.scene.start("Highscore");
+        }
+
       },
     });
   }

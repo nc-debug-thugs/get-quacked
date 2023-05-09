@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { where } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyByppDAEwSkZ9HpHvqNToyNbnt8zgLM1p8",
@@ -22,23 +23,23 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 // Init services
-const db = getFirestore();
+export const db = getFirestore();
 
 // Collection ref
-const colRef = collection(db, "scores");
+export const colRef = collection(db, "scores");
 
 // Get collection data
-getDocs(colRef).then((snapshot) => {
-  console.log(snapshot.docs);
-});
+// getDocs(colRef).then((snapshot) => {
+//   console.log(snapshot.docs);
+// });
 
 // Adding documents
-addDoc(colRef, {
-  score: 0,
-  username: "USR",
-});
+// addDoc(colRef, {
+//   score: 0,
+//   username: "USR",
+// });
 
 // Deleting documents
-const docRef = doc(db, "scores", "refId");
+// const docRef = doc(db, "scores", "refId");
 
-deleteDoc(docRef);
+// deleteDoc(docRef);

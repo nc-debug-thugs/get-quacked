@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { score } from "./PrePlay";
 import { highScores } from "../data/test-scores";
+import { db, colRef } from "../../firebase";
+import { getDocs } from "firebase/firestore";
 
 export class InputPanel extends Phaser.Scene {
   constructor() {
@@ -179,6 +181,10 @@ export class Highscore extends Phaser.Scene {
     this.load.image("block", "../assets/images/block.png");
     this.load.image("rub", "../assets/images/rub.png");
     this.load.image("end", "../assets/images/end.png");
+
+    getDocs(colRef).then((results) => {
+      console.log(results.docs);
+    });
 
     this.load.bitmapFont(
       "arcade",

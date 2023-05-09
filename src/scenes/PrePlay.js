@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export let round = 1;
 export let score = 0;
-export let currentHealth = 3
+export let currentHealth = 3;
 
 export function updateScore(amount) {
   score += amount;
@@ -10,11 +10,11 @@ export function updateScore(amount) {
 }
 
 export function incrementRound() {
-  round += 1
+  round += 1;
 }
 
 export function setHealth(newHealth) {
-  currentHealth = newHealth
+  currentHealth = newHealth;
 }
 
 export default class PrePlay extends Phaser.Scene {
@@ -26,7 +26,7 @@ export default class PrePlay extends Phaser.Scene {
 
   preload() {
     this.load.on("complete", () => {
-      this.scene.start("play");
+      this.scene.start("InputPanel");
     });
   }
 

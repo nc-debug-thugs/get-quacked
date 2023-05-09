@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 export let round = 1;
-export let score = 10000;
+export let score = 0;
 export let currentHealth = 3
 
 export function updateScore(amount) {
@@ -26,7 +26,7 @@ export default class PrePlay extends Phaser.Scene {
 
   preload() {
     this.load.on("complete", () => {
-      this.scene.start("Highscore");
+      this.scene.start("play");
     });
   }
 

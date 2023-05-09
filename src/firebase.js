@@ -7,7 +7,8 @@ import {
   query,
   orderBy,
   limit,
-  addDoc
+  addDoc,
+  onSnapshot
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -23,12 +24,12 @@ const firebaseConfig = {
 
 
 // Init firebase app
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 // Init services
-const db = getFirestore();
+const db = getFirestore(app)
 
-export const highscores = []
+export let highscores = []
 
 export function getScores() {
   // Collection ref
@@ -36,11 +37,12 @@ export function getScores() {
   // construct query
   const q = query(collection(db, 'scores'), orderBy('score', 'desc'), limit(6))
   // Get collection data
-  getDocs(q).then((snapshot) => {
+  onSnapshot (q, (snapshot) => {
+    console.log('getting snapshot')
+    highscores = []
     snapshot.forEach((doc)=> { highscores.push({score: doc.get('score'), name: doc.get('username')})});
-    // console.log(highscores)
-  });
-
+    console.log(highscores)
+  })
 }
 
 export function addScore(score, name) {

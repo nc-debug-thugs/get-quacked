@@ -1,8 +1,8 @@
 import Phaser from "phaser";
 
-export let round = 1;
-export let score = 0;
-export let currentHealth = 3
+export let round;
+export let score;
+export let currentHealth;
 
 export function updateScore(amount) {
   score += amount;
@@ -32,7 +32,7 @@ export default class PrePlay extends Phaser.Scene {
 
   create() {
     round = 1;
-    score = 0;
+    score = 102220;
     currentHealth = 3;
   }
 

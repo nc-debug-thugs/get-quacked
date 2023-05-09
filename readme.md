@@ -1,87 +1,86 @@
-# Phaser 3 + Vite.js Template
+# Get quacked!
 
-## Getting Started
+**A retro-style game built with Phaser 3 and Firebase.**
 
-Fork the repo so we can keep this as a clean base template and:
-```
-npm install
-```
+Take on the role of a fearless duck seeking revenge against hunters. Blast away at the hunters closing in on you and use your shield of eggs to protect yourself. But don't let your guard down—these hunters will stop at nothing to take you out! Can you help the duck get the ultimate revenge?
 
-Start development server:
+<!-- PROJECT SHIELDS -->
+<!-- [![Contributors][contributors-shield]][contributors-url] -->
+<!-- [![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url] -->
+<!-- [![MIT License][license-shield]][license-url] -->
 
-```
-npm run start
-```
+[Play game](https://)
 
-To create a production build:
+---
 
-```
-npm run build
-```
+## About the project
 
-Production files will be placed in the `dist` folder. Then upload those files to a web server. 🎉
+![Screenshot](public/assets/images/screenshot.png)
 
-## Project Structure
+We built this game as our final project for the [Northcoders](https://northcoders.com) full-stack bootcamp.
 
-```
-    .
-    ├── dist
-    ├── node_modules
-    ├── public
-    ├── src
-    │   ├── HelloWorldScene.js
-    │   ├── main.js
-	├── index.html
-    ├── package.json
-```
+### Authors
 
-JavaScript files are intended for the `src` folder. `main.js` is the entry point referenced by `index.html`.
+- [lynhodinh](https://github.com/lynhodinh)
+- [amparoamparo](https://github.com/amparoamparo)
+- [Harry Fleming](https://github.com/tooterfish)
+- [Zipeth1010](https://github.com/Zipeth1010)
+- [DavidMass](https://github.com/davidcmass)
 
-Other than that there is no opinion on how you should structure your project.
+### Built with
 
-There is an example `HelloWorldScene.js` file that can be placed inside a `scenes` folder to organize by type or elsewhere to organize by function. For example, you can keep all files specific to the HelloWorld scene in a `hello-world` folder.
+![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 
-It is all up to you!
+![Vite Badge](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff&style=for-the-badge)
 
-## Static Assets
+![Phaser](https://img.shields.io/badge/Phaser_3-b8e7f9?style=for-the-badge&logo=phaser3&logoColor=white)
 
-Any static assets like images or audio files should be placed in the `public` folder. It'll then be served from the root. For example: http://localhost:8000/images/my-image.png
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=000&style=for-the-badge)
 
-Example `public` structure:
+## Getting started
 
-```
-    public
-    ├── images
-    │   ├── my-image.png
-    ├── music
-    │   ├── ...
-    ├── sfx
-    │   ├── ...
-```
+### Installation
 
-They can then be loaded by Phaser with `this.image.load('my-image', 'images/my-image.png')`.
+To run _Get quacked!_ locally:
 
-# ESLint
+1. Clone the repo
 
-This template uses a basic `eslint` set up for code linting to help you find and fix common problems in your JavaScript code.
+   ```sh
+   git clone https://github.com/amparoamparo/get-quacked.git
+   ```
 
-It does not aim to be opinionated.
+2. Install NPM packages
 
-[See here for rules to turn on or off](https://eslint.org/docs/rules/).
+   ```sh
+   npm install
+   ```
 
-## Dev Server Port
+3. Run it and play!
 
-You can change the dev server's port number by modifying the `vite.config.js` file. Look for the `server` section:
+   ```sh
+   npm start
+   ```
 
-```js
-{
-	// ...
-	server: { host: '0.0.0.0', port: 8000 },
-}
-```
+## Controls
 
-Change 8000 to whatever you want.
+### <kbd>Enter</kbd>
 
-## License
+To start the game, press the <kbd>Enter</kbd> key or click on the screen.
 
-[MIT License](https://github.com/ourcade/phaser3-vite-template/blob/master/LICENSE)
+### <kbd>⬅</kbd> (left) and <kbd>➡</kbd> (right)
+
+To rotate the duck, use the <kbd>⬅</kbd> and <kbd>➡</kbd> arrow keys.
+
+### <kbd>Spacebar</kbd>
+
+To shoot, press the <kbd>Spacebar</kbd>.
+
+### <kbd>A</kbd> and <kbd>D</kbd>
+
+To rotate the shield to the left or to the right, use the <kbd>A</kbd> and <kbd>D</kbd> keys, respectively.
+
+### High scores
+
+Made it into the leaderboard? Enter your initials by typing them in or clicking on the letters. Then press <kbd>Enter</kbd> or click on `END` to publish your score.

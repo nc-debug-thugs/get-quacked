@@ -3,7 +3,7 @@ import { score } from "./PrePlay";
 import { highscores } from '../firebase';
 
 const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
-const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
+const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH', 'OFF']
 
 export class InputPanel extends Phaser.Scene {
   constructor() {
@@ -194,6 +194,7 @@ export class Highscore extends Phaser.Scene {
   create() {
     this.newHighscores = [...highscores]
     this.playerInd = highscores.findIndex((s) => {return s.score < score})
+    if (this.playerInd === -1) this.playerInd = 6
     this.add
       .bitmapText(100, 260, "arcade", "RANK  SCORE   NAME")
       .setTint(0xff00ff);
@@ -218,8 +219,6 @@ export class Highscore extends Phaser.Scene {
   submitName() {
     // this.newHighscores.splice(this.playerInd, 1)
     this.scene.stop("InputPanel");
-
-    console.log(this.newHighscores)
 
     let loop = false
     let i = 0

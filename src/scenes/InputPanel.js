@@ -2,8 +2,6 @@ import Phaser from "phaser";
 import { score } from "./PrePlay";
 import { highScores } from "../data/test-scores";
 
-let initials = "";
-
 export class InputPanel extends Phaser.Scene {
   constructor() {
     super({ key: "InputPanel", active: false });

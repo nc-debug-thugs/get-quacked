@@ -5,7 +5,6 @@ import { highscores } from '../firebase';
 const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
 const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
 
-
 export class InputPanel extends Phaser.Scene {
   constructor() {
     super({ key: "InputPanel", active: false });
@@ -26,6 +25,7 @@ export class InputPanel extends Phaser.Scene {
   }
 
   create() {
+
     let text = this.add.bitmapText(
       130,
       50,
@@ -192,7 +192,7 @@ export class Highscore extends Phaser.Scene {
   }
 
   create() {
-    console.log(highscores[0].score, score)
+    this.newHighscores = [...highscores]
     this.playerInd = highscores.findIndex((s) => {return s.score < score})
     this.add
       .bitmapText(100, 260, "arcade", "RANK  SCORE   NAME")
@@ -216,29 +216,52 @@ export class Highscore extends Phaser.Scene {
   }
 
   submitName() {
-    const newHighscores = [...highscores]
+    // this.newHighscores.splice(this.playerInd, 1)
     this.scene.stop("InputPanel");
 
-    // const tint = [0xff8200, 0xff8200, 0xffff00, 0xffff00, 0x00ff00, 0x00bfff]
-    // const rank = ['1ST', '2ND', '3RD', '4TH', '5TH', '6TH']
+    console.log(this.newHighscores)
 
-    newHighscores.forEach((score, i) => {
-      console.log(newHighscores.length)
+    let loop = false
+    let i = 0
+    let j = 0
+    if (this.newHighscores.length > 0) loop = true
+    while (loop) {
       if (this.playerInd !== i) {
+        const score = this.newHighscores[i]
         this.add.bitmapText(
           100,
-          360 + i * 50,
+          360 + j * 50,
           'arcade',
           `${rank[i]}   ${score.score}`
-        ).setTint(tint[i])
+        ).setTint(tint[j])
         this.add.bitmapText(
           580,
-          360 + i * 50,
+          360 + j * 50,
           'arcade',
           `${score.name}`
-        ).setTint(tint[i])
+        ).setTint(tint[j])
+        j += 1
       }
-    })
+      i += 1
+      if (i >= this.newHighscores.length) loop = false
+    }
+
+    // this.newHighscores.forEach((score, i) => {
+    //   // if (this.playerInd !== i) {
+    //     this.add.bitmapText(
+    //       100,
+    //       360 + i * 50,
+    //       'arcade',
+    //       `${rank[i]}   ${score.score}`
+    //     ).setTint(tint[i])
+    //     this.add.bitmapText(
+    //       580,
+    //       360 + i * 50,
+    //       'arcade',
+    //       `${score.name}`
+    //     ).setTint(tint[i])
+    //   // }
+    // })
 
   //   this.add
   //     .bitmapText(

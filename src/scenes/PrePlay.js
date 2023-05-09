@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 export let round = 1;
-export let score = 10000;
+export let score = 1000;
 export let currentHealth = 3
 
 export function updateScore(amount) {

@@ -23,6 +23,14 @@ export default class Play extends Phaser.Scene {
     });
     pauseBtn.setScale(0.2);
 
+    let pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    pKey.on("down", () => {
+      this.scene.pause("play");
+      this.scene.launch("pause");
+    });
+
+    this.input.keyboard.enabled = true;
+
     this.isActive = true;
 
     //health bar setup

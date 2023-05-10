@@ -14,5 +14,13 @@ export default class PauseScene extends Phaser.Scene {
       this.scene.scene.stop("pause");
     });
     resumeBtn.setScale(0.6);
+
+    let pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    pKey.on("down", () => {
+      this.scene.resume("play");
+      this.scene.stop("pause");
+    });
+
+    this.input.keyboard.enabled = true;
   }
 }

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import {getScores} from '../firebase'
+import { getScores } from "../firebase";
 
 export default class Boot extends Phaser.Scene {
   constructor() {
@@ -9,7 +9,7 @@ export default class Boot extends Phaser.Scene {
   }
 
   preload() {
-    getScores()
+    getScores();
 
     this.load.spritesheet("duck", "../assets/images/duck.png", {
       frameWidth: 128,
@@ -30,6 +30,7 @@ export default class Boot extends Phaser.Scene {
     this.load.image("aim", "../assets/images/aim.png");
     this.load.image("moveshield", "../assets/images/moveshield.png");
     this.load.image("shield", "../assets/images/shield.png");
+    this.load.image("pause", "../assets/images/pause.png");
     this.load.audio("quacksound", "../assets/images/quack.wav");
     this.load.audio("explosionsound", "../assets/images/explosion.wav");
     this.load.audio("oof", "../assets/images/oof.wav");

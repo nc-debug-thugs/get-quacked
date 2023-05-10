@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import Health from "../classes/Health";
 import EnemyHelper from "../classes/EnemyHelper";
 import PlayerHelper from "../classes/PlayerHelper";
-
+import PauseScene from "./Pause";
 import { score, round, updateScore, incrementRound } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
@@ -14,7 +14,23 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
-    //is scene active
+    this.scene.add("pause", PauseScene);
+    let pauseBtn = this.add.image(90, 550, "pause").setDepth(10);
+    pauseBtn.setInteractive();
+    pauseBtn.on("pointerdown", function () {
+      this.scene.scene.pause("play");
+      this.scene.scene.launch("pause");
+    });
+    pauseBtn.setScale(0.2);
+
+    let pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    pKey.on("down", () => {
+      this.scene.pause("play");
+      this.scene.launch("pause");
+    });
+
+    this.input.keyboard.enabled = true;
+
     this.isActive = true;
 
     //health bar setup
@@ -76,7 +92,7 @@ export default class Play extends Phaser.Scene {
     bgImage.setScale(1).setScrollFactor(0);
 
     // Random hunter selected to shoot at random time
-    const shootDelay = 3000 - 200 * round
+    const shootDelay = 3000 - 200 * round;
     this.time.addEvent({
       delay: Phaser.Math.Between(shootDelay - 100, shootDelay + 100),
       loop: true,

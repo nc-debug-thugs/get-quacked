@@ -1,4 +1,4 @@
-export default class Pause extends Phaser.Scene {
+export default class PauseScene extends Phaser.Scene {
   constructor() {
     super({
       key: "pause",
@@ -6,19 +6,13 @@ export default class Pause extends Phaser.Scene {
   }
 
   create() {
-    let resumeBtn = this.add.text(500, 200, "Resume", {
-      fontSize: "32px",
-      color: black,
-    });
-    resumeBtn.setInteractive();
+    let resumeBtn = this.add.image(400, 300, "resume").setDepth(10);
 
-    resumeBtn.on(
-      "pointerdown",
-      function () {
-        this.scene.resume("play");
-        this.scene.stop("pause");
-      },
-      this
-    );
+    resumeBtn.setInteractive();
+    resumeBtn.on("pointerdown", function () {
+      this.scene.scene.resume("play");
+      this.scene.scene.stop("pause");
+    });
+    resumeBtn.setScale(0.6);
   }
 }

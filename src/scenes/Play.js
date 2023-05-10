@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import Health from "../classes/Health";
 import EnemyHelper from "../classes/EnemyHelper";
 import PlayerHelper from "../classes/PlayerHelper";
-
+import PauseScene from "./Pause";
 import { score, round, updateScore, incrementRound } from "./PrePlay";
 
 export default class Play extends Phaser.Scene {
@@ -14,8 +14,15 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
-    let pauseBtn = this.add.image(500, 520, "pause");
-    //is scene active
+    this.scene.add("pause", PauseScene);
+    let pauseBtn = this.add.image(90, 550, "pause").setDepth(10);
+    pauseBtn.setInteractive();
+    pauseBtn.on("pointerdown", function () {
+      this.scene.scene.pause("play");
+      this.scene.scene.launch("pause");
+    });
+    pauseBtn.setScale(0.2);
+
     this.isActive = true;
 
     //health bar setup

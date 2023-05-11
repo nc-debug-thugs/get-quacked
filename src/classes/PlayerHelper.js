@@ -47,11 +47,11 @@ export default class PlayerHelper {
 
   movePlayer() {
     if (this.cursors.left.isDown) {
-      this.player.angle -= 2;
+      this.player.angle -= 1;
     }
 
     if (this.cursors.right.isDown) {
-      this.player.angle += 2;
+      this.player.angle += 1;
     }
 
     if (this.cursors.space.isDown) {

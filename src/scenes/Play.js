@@ -14,7 +14,7 @@ export default class Play extends Phaser.Scene {
   }
 
   create() {
-    this.scene.add("pause", PauseScene);
+    // this.scene.add("pause", PauseScene);
     let pauseBtn = this.add.image(90, 550, "pause").setDepth(10);
     pauseBtn.setInteractive();
     pauseBtn.on("pointerdown", function () {

@@ -4,6 +4,7 @@ import PrePlay from "./scenes/PrePlay";
 import Play from "./scenes/Play";
 import GameOver from "./scenes/GameOver";
 import Start from "./scenes/Start";
+import PauseScene from "./scenes/Pause";
 import { Highscore, InputPanel } from "./scenes/InputPanel";
 
 const config = {
@@ -17,7 +18,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Boot, Start, PrePlay, Play, GameOver, InputPanel, Highscore],
+  scene: [Boot, Start, PrePlay, Play, GameOver, InputPanel, Highscore, PauseScene],
 };
 
 export default new Phaser.Game(config);

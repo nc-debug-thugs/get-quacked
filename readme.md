@@ -11,7 +11,7 @@ Take on the role of a fearless duck seeking revenge against hunters. Blast away 
 [![Issues][issues-shield]][issues-url] -->
 <!-- [![MIT License][license-shield]][license-url] -->
 
-[Play game](https://)
+[Play game](https://get-quacked.vercel.app/)
 
 ---
 
